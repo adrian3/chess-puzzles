@@ -4,4 +4,9 @@ Chess Puzzles is a standalone chess puzzle app.
 
 ## GitHub Pages
 
-The repository root `index.html` redirects to the app entrypoint in `www/index.html`, so the project can be published as a GitHub Pages site without flattening the legacy app layout.
+The repository root `index.html` is the app entrypoint for GitHub Pages.
+
+## Layout
+
+- App assets now live at the repository root in `audio/`, `css/`, `fonts/`, `images/`, and `scripts/`.
+- The app still uses relative paths, so the flattened layout works the same way locally and on GitHub Pages.

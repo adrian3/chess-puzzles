@@ -1,12 +1,651 @@
 <!doctype html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="utf-8">
-  <meta http-equiv="refresh" content="0; url=www/index.html">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Chess Puzzles</title>
-</head>
-<body>
-  <p>Redirecting to <a href="www/index.html">Chess Puzzles</a>...</p>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+<title>Chess Puzzles Pro</title>
+
+<link rel="stylesheet" href="css/jqtouch.css">
+<link rel="stylesheet" href="css/theme.min.css">
+<link rel="stylesheet" href="css/styles.css">
+
+<script src="scripts/jqtouch.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="scripts/jquery-1.11.0.min.js" type="application/x-javascript" charset="utf-8"></script>
+<script src="scripts/jqtouch-jquery.min.js" type="application/x-javascript" charset="utf-8"></script>
+<script src="scripts/fastclick.js" type="text/javascript" charset="utf-8"></script>
+<script src="cordova.js" type="text/javascript"></script>
+<script>// temp fix for iOS8 beta, add it after the reference to cordova.js
+    if (navigator.userAgent === undefined) {navigator.__defineGetter__('userAgent', function() {return("Mozilla/5.0 (iPhone; CPU iPhone OS 8_0 like Mac OS X) AppleWebKit");});}
+    </script>
+<script src="scripts/jNotify.jquery.js" type="text/javascript" charset="utf-8"></script>
+<script src="scripts/ltpgnviewer.js" type="text/javascript" charset="utf-8"></script>
+<script src="scripts/problemboard.js" type="text/javascript" charset="utf-8"></script>
+<script src="scripts/audio.js" type="text/javascript" charset="utf-8"></script>
+<script src="scripts/puzzles.js" type="text/javascript" charset="utf-8"></script>
+<script src="scripts/defaults.js" type="text/javascript" charset="utf-8"></script>
+<script src="scripts/app.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript">app.initialize();</script>
+
+<body onload="onBodyLoad();">
+
+<div id="jqt">
+
+<!-- Puzzle Screen -->
+<div id="puzzles" ontouchmove="BlockMove(event);">
+<div class="vertical-center">
+  <div id="chessboard">
+    <div id='Board'>
+      <form name=BoardForm>
+        <table border=0><tr><td>
+          <script language="JavaScript">
+          WriteBoard(0);
+          AllowRecording(true);
+          AllowNullMove(false);
+          currentGame();
+        	</script>
+        </tr></table>
+        </form>
+      </div>
+      <div class="movebullets"></div>
+      <!-- <script type="text/javascript" charset="utf-8">WriteHintButtons();</script> -->
+    </div>
+      <div id='gameText'></div></div>
+<!-- <a onclick="alert(currentgame);">currentgame</a> -->
+<!-- tabbar -->
+  <div id="bottombar">
+	  <div>
+    <ul>
+      <li id="tab_1"><a onclick="prevGame();" href="#puzzles"><img src="images/go-previous.svg" width="30px"></a></li>
+      <li id="tab_2"><a onclick="hideNotifications(),updatePuzzleList();" href="#listpuzzle1"><img src="images/list.svg" width="30px"></a></li>
+      <li id="tab_3"><a class="slideright" onclick="hideNotifications();" href="#home"><img src="images/home.svg" width="17px"></a></li>
+      <li id="tab_4"><a onclick="updateScores(),hideNotifications();" href="#achievements"><img src="images/trophy.svg" width="20px"></a></li>
+      <li id="tab_5"><a onclick="nextGame();" href="#puzzles"><img src="images/go-next.svg" width="30px"></a></li>
+    </ul>
+    </div>
+  </div>
+</div>
+
+<!-- home -->
+<div id="home" class="current">
+<div class="vertical-center">
+<div class="vertical-center-inner">
+  <div class="logo">
+    <img src="images/puzzles-logo.svg">
+  </div>
+  <ul class="rounded">
+    <li class="arrow"><a href="#puzzles">Puzzles</a></li>
+    <li class="arrow"><a href="#tutorial">Tutorial</a></li>
+    <li class="arrow"><a href="#settings">Settings</a></li>
+    <li class="arrow"><a href="#credits">Credits</a></li>
+    <li class="arrow"><a href="#moreapps">More Chess Apps</a></li>
+  </ul>
+</div>
+</div>
+</div>
+
+<!-- Achievements -->
+<div id="achievements">
+    <div class="toolbar">
+      <a class="goback" href="#home"><img src="images/back.svg"></a>
+        <h1>Your Records</h1>
+    </div>
+  
+    <ul class="rounded">
+    	<li class="title">Totals</li>
+    	<li>Current puzzle: <span class="currentpuzzle"></span></li>
+    	<li>Total Puzzles solved: <span class="totalsolved"></span></li>
+    	<li>Your rank: <span class="yourrank"></span></li>
+      <!-- <li>Current level: <span class="currentlevel"></span></li> -->
+    	<li>Perfect game count:  <span class="perfectgamecount"></span></li>
+    	<li>Correct move ratio:  <span class="correctmoveratio"></span></li>
+    	<li>Hints received:  <span class="hintsreceived"></span></li>
+    </ul>
+    <ul class="rounded">
+    	<li class="title">Streaks</li>	
+    	<li>Current puzzles solved streak:  <span class="currentpuzzlessolvedstreak"></span></li>
+    	<li>Longest puzzles solved streak:  <span class="longestpuzzlessolvedstreak"></span></li>
+    	<li>Longest correct move streak:  <span class="longestcorrectmovestreak"></span></li>
+    	<li>Current correct move streak:  <span class="currentcorrectmovestreak"></span></li>
+    </ul>
+</div>
+
+
+<!-- Puzzle History -->
+<div id="listpuzzle1">
+    <div class="toolbar">
+      <a class="goback" href="#home"><img src="images/back.svg"></a>
+        <h1></h1>
+    </div>
+
+        <ul class="listnav">
+          <li>Show: <a class="filtr filtr-all" href="#listpuzzle1" onclick="showAll();"> All</a> <a class="filtr filtr-solved" href="#listpuzzle1" onclick="showSolved();"> Solved</a> <a class="filtr filtr-unsolved" href="#listpuzzle1" onclick="showUnsolved();">  Unsolved</a> <a class="filtr filtr-black" href="#listpuzzle1" onclick="showBlack();"> Black</a> <a class="filtr filtr-white" href="#listpuzzle1" onclick="showWhite();"> White</a></li>
+          <li>Mate in: <a class="filtr filtr-1" href="#listpuzzle1" onclick="showMateIn(1);"> 1 </a>
+          <a class="filtr filtr-2" href="#listpuzzle1" onclick="showMateIn(2);">2 </a>
+          <a class="filtr filtr-3" href="#listpuzzle1" onclick="showMateIn(3);">3 </a>
+          <a class="filtr filtr-4" href="#listpuzzle1" onclick="showMateIn(4);">4 </a>
+          <a class="filtr filtr-5" href="#listpuzzle1" onclick="showMateIn(5);">5 </a>
+          <a class="filtr filtr-6" href="#listpuzzle1" onclick="showMateIn6Plus();">6+ </a>     
+          <!-- <a onclick="showMateIn(7);">7 </a>
+          <a onclick="showMateIn(8);">8 </a>
+          <a onclick="showMateIn(9);">9 </a>
+          <a onclick="showMateIn(11);">11</a> -->
+          </li>
+        </ul>
+
+        <ul class="rounded">
+<!-- <li><a onclick="showMateInXMoves(),jQT.goTo('#puzzles','slideleft');">Current Puzzle</a></li> -->
+<li class="matein1  White  unsolved  score0"   ><a onclick="scoreClick(0);">   0.  White in 1:  <span class="result0" ></span></a></li>
+<li class="matein2  White  unsolved  score1"   ><a onclick="scoreClick(1);">   1.  White in 2:  <span class="result1" ></span></a></li>
+<li class="matein2  White  unsolved  score2"   ><a onclick="scoreClick(2);">   2.  White in 2:  <span class="result2" ></span></a></li>
+<li class="matein1  White  unsolved  score3"   ><a onclick="scoreClick(3);">   3.  White in 1:  <span class="result3" ></span></a></li>
+<li class="matein2  White  unsolved  score4"   ><a onclick="scoreClick(4);">   4.  White in 2:  <span class="result4" ></span></a></li>
+<li class="matein1  White  unsolved  score5"   ><a onclick="scoreClick(5);">   5.  White in 1:  <span class="result5" ></span></a></li>
+<li class="matein2  White  unsolved  score6"   ><a onclick="scoreClick(6);">   6.  White in 2:  <span class="result6" ></span></a></li>
+<li class="matein2  White  unsolved  score7"   ><a onclick="scoreClick(7);">   7.  White in 2:  <span class="result7" ></span></a></li>
+<li class="matein2  White  unsolved  score8"   ><a onclick="scoreClick(8);">   8.  White in 2:  <span class="result8" ></span></a></li>
+<li class="matein1  White  unsolved  score9"   ><a onclick="scoreClick(9);">   9.  White in 1:  <span class="result9" ></span></a></li>
+<li class="matein4  White  unsolved  score10"  ><a onclick="scoreClick(10);"> 10.  White in 4:  <span class="result10"></span></a></li>
+<li class="matein3  White  unsolved  score11"  ><a onclick="scoreClick(11);"> 11.  White in 3:  <span class="result11"></span></a></li>
+<li class="matein2  White  unsolved  score12"  ><a onclick="scoreClick(12);"> 12.  White in 2:  <span class="result12"></span></a></li>
+<li class="matein2  White  unsolved  score13"  ><a onclick="scoreClick(13);"> 13.  White in 2:  <span class="result13"></span></a></li>
+<li class="matein3  White  unsolved  score14"  ><a onclick="scoreClick(14);"> 14.  White in 3:  <span class="result14"></span></a></li>
+<li class="matein6  White  unsolved  score15"  ><a onclick="scoreClick(15);"> 15.  White in 6:  <span class="result15"></span></a></li>
+<li class="matein7  White  unsolved  score16"  ><a onclick="scoreClick(16);"> 16.  White in 7:  <span class="result16"></span></a></li>
+<li class="matein2  White  unsolved  score17"  ><a onclick="scoreClick(17);"> 17.  White in 2:  <span class="result17"></span></a></li>
+<li class="matein3  White  unsolved  score18"  ><a onclick="scoreClick(18);"> 18.  White in 3:  <span class="result18"></span></a></li>
+<li class="matein1  White  unsolved  score19"  ><a onclick="scoreClick(19);"> 19.  White in 1:  <span class="result19"></span></a></li>
+<li class="matein4  White  unsolved  score20"  ><a onclick="scoreClick(20);"> 20.  White in 4:  <span class="result20"></span></a></li>
+<li class="matein3  White  unsolved  score21"  ><a onclick="scoreClick(21);"> 21.  White in 3:  <span class="result21"></span></a></li>
+<li class="matein3  White  unsolved  score22"  ><a onclick="scoreClick(22);"> 22.  White in 3:  <span class="result22"></span></a></li>
+<li class="matein3  White  unsolved  score23"  ><a onclick="scoreClick(23);"> 23.  White in 3:  <span class="result23"></span></a></li>
+<li class="matein3  White  unsolved  score24"  ><a onclick="scoreClick(24);"> 24.  White in 3:  <span class="result24"></span></a></li>
+<li class="matein2  White  unsolved  score25"  ><a onclick="scoreClick(25);"> 25.  White in 2:  <span class="result25"></span></a></li>
+<li class="matein3  White  unsolved  score26"  ><a onclick="scoreClick(26);"> 26.  White in 3:  <span class="result26"></span></a></li>
+<li class="matein2  White  unsolved  score27"  ><a onclick="scoreClick(27);"> 27.  White in 2:  <span class="result27"></span></a></li>
+<li class="matein3  White  unsolved  score28"  ><a onclick="scoreClick(28);"> 28.  White in 3:  <span class="result28"></span></a></li>
+<li class="matein4  White  unsolved  score29"  ><a onclick="scoreClick(29);"> 29.  White in 4:  <span class="result29"></span></a></li>
+<li class="matein3  White  unsolved  score30"  ><a onclick="scoreClick(30);"> 30.  White in 3:  <span class="result30"></span></a></li>
+<li class="matein2  White  unsolved  score31"  ><a onclick="scoreClick(31);"> 31.  White in 2:  <span class="result31"></span></a></li>
+<li class="matein6  White  unsolved  score32"  ><a onclick="scoreClick(32);"> 32.  White in 6:  <span class="result32"></span></a></li>
+<li class="matein4  White  unsolved  score33"  ><a onclick="scoreClick(33);"> 33.  White in 4:  <span class="result33"></span></a></li>
+<li class="matein5  White  unsolved  score34"  ><a onclick="scoreClick(34);"> 34.  White in 5:  <span class="result34"></span></a></li>
+<li class="matein5  White  unsolved  score35"  ><a onclick="scoreClick(35);"> 35.  White in 5:  <span class="result35"></span></a></li>
+<li class="matein6  White  unsolved  score36"  ><a onclick="scoreClick(36);"> 36.  White in 6:  <span class="result36"></span></a></li>
+<li class="matein5  White  unsolved  score37"  ><a onclick="scoreClick(37);"> 37.  White in 5:  <span class="result37"></span></a></li>
+<li class="matein2  White  unsolved  score38"  ><a onclick="scoreClick(38);"> 38.  White in 2:  <span class="result38"></span></a></li>
+<li class="matein2  White  unsolved  score39"  ><a onclick="scoreClick(39);"> 39.  White in 2:  <span class="result39"></span></a></li>
+<li class="matein2  White  unsolved  score40"  ><a onclick="scoreClick(40);"> 40.  White in 2:  <span class="result40"></span></a></li>
+<li class="matein2  White  unsolved  score41"  ><a onclick="scoreClick(41);"> 41.  White in 2:  <span class="result41"></span></a></li>
+<li class="matein3  White  unsolved  score42"  ><a onclick="scoreClick(42);"> 42.  White in 3:  <span class="result42"></span></a></li>
+<li class="matein5  White  unsolved  score43"  ><a onclick="scoreClick(43);"> 43.  White in 5:  <span class="result43"></span></a></li>
+<li class="matein4  White  unsolved  score44"  ><a onclick="scoreClick(44);"> 44.  White in 4:  <span class="result44"></span></a></li>
+<li class="matein2  White  unsolved  score45"  ><a onclick="scoreClick(45);"> 45.  White in 2:  <span class="result45"></span></a></li>
+<li class="matein3  White  unsolved  score46"  ><a onclick="scoreClick(46);"> 46.  White in 3:  <span class="result46"></span></a></li>
+<li class="matein6  White  unsolved  score47"  ><a onclick="scoreClick(47);"> 47.  White in 6:  <span class="result47"></span></a></li>
+<li class="matein4  White  unsolved  score48"  ><a onclick="scoreClick(48);"> 48.  White in 4:  <span class="result48"></span></a></li>
+<li class="matein4  White  unsolved  score49"  ><a onclick="scoreClick(49);"> 49.  White in 4:  <span class="result49"></span></a></li>
+<li class="matein4  White  unsolved  score50"  ><a onclick="scoreClick(50);"> 50.  White in 4:  <span class="result50"></span></a></li>
+
+<li class="matein1  Black  unsolved  score51"  ><a onclick="scoreClick(51);"> 51.  Black in 1:  <span class="result51"></span></a></li>
+<li class="matein2  Black  unsolved  score52"  ><a onclick="scoreClick(52);"> 52.  Black in 2:  <span class="result52"></span></a></li>
+<li class="matein1  Black  unsolved  score53"  ><a onclick="scoreClick(53);"> 53.  Black in 1:  <span class="result53"></span></a></li>
+<li class="matein2  Black  unsolved  score54"  ><a onclick="scoreClick(54);"> 54.  Black in 2:  <span class="result54"></span></a></li>
+<li class="matein5  Black  unsolved  score55"  ><a onclick="scoreClick(55);"> 55.  Black in 5:  <span class="result55"></span></a></li>
+<li class="matein6  Black  unsolved  score56"  ><a onclick="scoreClick(56);"> 56.  Black in 6:  <span class="result56"></span></a></li>
+<li class="matein6  Black  unsolved  score57"  ><a onclick="scoreClick(57);"> 57.  Black in 6:  <span class="result57"></span></a></li>
+<li class="matein3  Black  unsolved  score58"  ><a onclick="scoreClick(58);"> 58.  Black in 3:  <span class="result58"></span></a></li>
+<li class="matein3  Black  unsolved  score59"  ><a onclick="scoreClick(59);"> 59.  Black in 3:  <span class="result59"></span></a></li>
+<li class="matein4  Black  unsolved  score60"  ><a onclick="scoreClick(60);"> 60.  Black in 4:  <span class="result60"></span></a></li>
+<li class="matein3  Black  unsolved  score61"  ><a onclick="scoreClick(61);"> 61.  Black in 3:  <span class="result61"></span></a></li>
+<li class="matein3  Black  unsolved  score62"  ><a onclick="scoreClick(62);"> 62.  Black in 3:  <span class="result62"></span></a></li>
+<li class="matein2  Black  unsolved  score63"  ><a onclick="scoreClick(63);"> 63.  Black in 2:  <span class="result63"></span></a></li>
+<li class="matein2  Black  unsolved  score64"  ><a onclick="scoreClick(64);"> 64.  Black in 2:  <span class="result64"></span></a></li>
+<li class="matein4  Black  unsolved  score65"  ><a onclick="scoreClick(65);"> 65.  Black in 4:  <span class="result65"></span></a></li>
+<li class="matein2  Black  unsolved  score66"  ><a onclick="scoreClick(66);"> 66.  Black in 2:  <span class="result66"></span></a></li>
+<li class="matein4  Black  unsolved  score67"  ><a onclick="scoreClick(67);"> 67.  Black in 4:  <span class="result67"></span></a></li>
+<li class="matein3  Black  unsolved  score68"  ><a onclick="scoreClick(68);"> 68.  Black in 3:  <span class="result68"></span></a></li>
+<li class="matein5  Black  unsolved  score69"  ><a onclick="scoreClick(69);"> 69.  Black in 5:  <span class="result69"></span></a></li>
+<li class="matein3  Black  unsolved  score70"  ><a onclick="scoreClick(70);"> 70.  Black in 3:  <span class="result70"></span></a></li>
+<li class="matein7  Black  unsolved  score71"  ><a onclick="scoreClick(71);"> 71.  Black in 7:  <span class="result71"></span></a></li>
+<li class="matein3  Black  unsolved  score72"  ><a onclick="scoreClick(72);"> 72.  Black in 3:  <span class="result72"></span></a></li>
+<li class="matein2  Black  unsolved  score73"  ><a onclick="scoreClick(73);"> 73.  Black in 2:  <span class="result73"></span></a></li>
+<li class="matein2  Black  unsolved  score74"  ><a onclick="scoreClick(74);"> 74.  Black in 2:  <span class="result74"></span></a></li>
+<li class="matein3  Black  unsolved  score75"  ><a onclick="scoreClick(75);"> 75.  Black in 3:  <span class="result75"></span></a></li>
+<li class="matein9  Black  unsolved  score76"  ><a onclick="scoreClick(76);"> 76.  Black in 9:  <span class="result76"></span></a></li>
+<li class="matein3  Black  unsolved  score77"  ><a onclick="scoreClick(77);"> 77.  Black in 3:  <span class="result77"></span></a></li>
+<li class="matein2  Black  unsolved  score78"  ><a onclick="scoreClick(78);"> 78.  Black in 2:  <span class="result78"></span></a></li>
+<li class="matein3  Black  unsolved  score79"  ><a onclick="scoreClick(79);"> 79.  Black in 3:  <span class="result79"></span></a></li>
+<li class="matein6  Black  unsolved  score80"  ><a onclick="scoreClick(80);"> 80.  Black in 6:  <span class="result80"></span></a></li>
+<li class="matein3  Black  unsolved  score81"  ><a onclick="scoreClick(81);"> 81.  Black in 3:  <span class="result81"></span></a></li>
+<li class="matein3  Black  unsolved  score82"  ><a onclick="scoreClick(82);"> 82.  Black in 3:  <span class="result82"></span></a></li>
+<li class="matein5  Black  unsolved  score83"  ><a onclick="scoreClick(83);"> 83.  Black in 5:  <span class="result83"></span></a></li>
+<li class="matein2  Black  unsolved  score84"  ><a onclick="scoreClick(84);"> 84.  Black in 2:  <span class="result84"></span></a></li>
+<li class="matein3  Black  unsolved  score85"  ><a onclick="scoreClick(85);"> 85.  Black in 3:  <span class="result85"></span></a></li>
+<li class="matein4  Black  unsolved  score86"  ><a onclick="scoreClick(86);"> 86.  Black in 4:  <span class="result86"></span></a></li>
+<li class="matein3  Black  unsolved  score87"  ><a onclick="scoreClick(87);"> 87.  Black in 3:  <span class="result87"></span></a></li>
+<li class="matein3  Black  unsolved  score88"  ><a onclick="scoreClick(88);"> 88.  Black in 3:  <span class="result88"></span></a></li>
+<li class="matein3  Black  unsolved  score89"  ><a onclick="scoreClick(89);"> 89.  Black in 3:  <span class="result89"></span></a></li>
+<li class="matein1  Black  unsolved  score90"  ><a onclick="scoreClick(90);"> 90.  Black in 1:  <span class="result90"></span></a></li>
+<li class="matein3  Black  unsolved  score91"  ><a onclick="scoreClick(91);"> 91.  Black in 3:  <span class="result91"></span></a></li>
+<li class="matein3  Black  unsolved  score92"  ><a onclick="scoreClick(92);"> 92.  Black in 3:  <span class="result92"></span></a></li>
+<li class="matein5  Black  unsolved  score93"  ><a onclick="scoreClick(93);"> 93.  Black in 5:  <span class="result93"></span></a></li>
+<li class="matein3  Black  unsolved  score94"  ><a onclick="scoreClick(94);"> 94.  Black in 3:  <span class="result94"></span></a></li>
+<li class="matein2  Black  unsolved  score95"  ><a onclick="scoreClick(95);"> 95.  Black in 2:  <span class="result95"></span></a></li>
+<li class="matein5  Black  unsolved  score96"  ><a onclick="scoreClick(96);"> 96.  Black in 5:  <span class="result96"></span></a></li>
+<li class="matein3  Black  unsolved  score97"  ><a onclick="scoreClick(97);"> 97.  Black in 3:  <span class="result97"></span></a></li>
+<li class="matein4  Black  unsolved  score98"  ><a onclick="scoreClick(98);"> 98.  Black in 4:  <span class="result98"></span></a></li>
+<li class="matein2  Black  unsolved  score99"  ><a onclick="scoreClick(99);"> 99.  Black in 2:  <span class="result99"></span></a></li>
+<li class="matein2  Black  unsolved  score100" ><a onclick="scoreClick(100);">100. Black in 2:  <span class="result100"></span></a></li>
+
+<li class="matein4  White  unsolved  score101" ><a onclick="scoreClick(101);">101. White in 4:  <span class="result101"></span></a></li>
+<li class="matein2  White  unsolved  score102" ><a onclick="scoreClick(102);">102. White in 2:  <span class="result102"></span></a></li>
+<li class="matein4  White  unsolved  score103" ><a onclick="scoreClick(103);">103. White in 4:  <span class="result103"></span></a></li>
+<li class="matein2  White  unsolved  score104" ><a onclick="scoreClick(104);">104. White in 2:  <span class="result104"></span></a></li>
+<li class="matein3  White  unsolved  score105" ><a onclick="scoreClick(105);">105. White in 3:  <span class="result105"></span></a></li>
+<li class="matein6  White  unsolved  score106" ><a onclick="scoreClick(106);">106. White in 6:  <span class="result106"></span></a></li>
+<li class="matein3  White  unsolved  score107" ><a onclick="scoreClick(107);">107. White in 3:  <span class="result107"></span></a></li>
+<li class="matein3  White  unsolved  score108" ><a onclick="scoreClick(108);">108. White in 3:  <span class="result108"></span></a></li>
+<li class="matein3  White  unsolved  score109" ><a onclick="scoreClick(109);">109. White in 3:  <span class="result109"></span></a></li>
+<li class="matein5  White  unsolved  score110" ><a onclick="scoreClick(110);">110. White in 5:  <span class="result110"></span></a></li>
+<li class="matein4  White  unsolved  score111" ><a onclick="scoreClick(111);">111. White in 4:  <span class="result111"></span></a></li>
+<li class="matein4  White  unsolved  score112" ><a onclick="scoreClick(112);">112. White in 4:  <span class="result112"></span></a></li>
+<li class="matein4  White  unsolved  score113" ><a onclick="scoreClick(113);">113. White in 4:  <span class="result113"></span></a></li>
+<li class="matein3  White  unsolved  score114" ><a onclick="scoreClick(114);">114. White in 3:  <span class="result114"></span></a></li>
+<li class="matein5  White  unsolved  score115" ><a onclick="scoreClick(115);">115. White in 5:  <span class="result115"></span></a></li>
+<li class="matein3  White  unsolved  score116" ><a onclick="scoreClick(116);">116. White in 3:  <span class="result116"></span></a></li>
+<li class="matein5  White  unsolved  score117" ><a onclick="scoreClick(117);">117. White in 5:  <span class="result117"></span></a></li>
+<li class="matein3  White  unsolved  score118" ><a onclick="scoreClick(118);">118. White in 3:  <span class="result118"></span></a></li>
+<li class="matein3  White  unsolved  score119" ><a onclick="scoreClick(119);">119. White in 3:  <span class="result119"></span></a></li>
+<li class="matein6  White  unsolved  score120" ><a onclick="scoreClick(120);">120. White in 6:  <span class="result120"></span></a></li>
+<li class="matein3  White  unsolved  score121" ><a onclick="scoreClick(121);">121. White in 3:  <span class="result121"></span></a></li>
+<li class="matein4  White  unsolved  score122" ><a onclick="scoreClick(122);">122. White in 4:  <span class="result122"></span></a></li>
+<li class="matein3  White  unsolved  score123" ><a onclick="scoreClick(123);">123. White in 3:  <span class="result123"></span></a></li>
+<li class="matein3  White  unsolved  score124" ><a onclick="scoreClick(124);">124. White in 3:  <span class="result124"></span></a></li>
+<li class="matein8  White  unsolved  score125" ><a onclick="scoreClick(125);">125. White in 8:  <span class="result125"></span></a></li>
+<li class="matein5  White  unsolved  score126" ><a onclick="scoreClick(126);">126. White in 5:  <span class="result126"></span></a></li>
+<li class="matein3  White  unsolved  score127" ><a onclick="scoreClick(127);">127. White in 3:  <span class="result127"></span></a></li>
+<li class="matein4  White  unsolved  score128" ><a onclick="scoreClick(128);">128. White in 4:  <span class="result128"></span></a></li>
+<li class="matein2  White  unsolved  score129" ><a onclick="scoreClick(129);">129. White in 2:  <span class="result129"></span></a></li>
+<li class="matein2  White  unsolved  score130" ><a onclick="scoreClick(130);">130. White in 2:  <span class="result130"></span></a></li>
+<li class="matein2  White  unsolved  score131" ><a onclick="scoreClick(131);">131. White in 2:  <span class="result131"></span></a></li>
+<li class="matein6  White  unsolved  score132" ><a onclick="scoreClick(132);">132. White in 6:  <span class="result132"></span></a></li>
+<li class="matein4  White  unsolved  score133" ><a onclick="scoreClick(133);">133. White in 4:  <span class="result133"></span></a></li>
+<li class="matein2  White  unsolved  score134" ><a onclick="scoreClick(134);">134. White in 2:  <span class="result134"></span></a></li>
+<li class="matein2  White  unsolved  score135" ><a onclick="scoreClick(135);">135. White in 2:  <span class="result135"></span></a></li>
+<li class="matein3  White  unsolved  score136" ><a onclick="scoreClick(136);">136. White in 3:  <span class="result136"></span></a></li>
+<li class="matein3  White  unsolved  score137" ><a onclick="scoreClick(137);">137. White in 3:  <span class="result137"></span></a></li>
+<li class="matein11 White  unsolved  score138" ><a onclick="scoreClick(138);">138. White in 11: <span class="result138"></span></a></li>
+<li class="matein2  White  unsolved  score139" ><a onclick="scoreClick(139);">139. White in 2:  <span class="result139"></span></a></li>
+<li class="matein2  White  unsolved  score140" ><a onclick="scoreClick(140);">140. White in 2:  <span class="result140"></span></a></li>
+<li class="matein3  White  unsolved  score141" ><a onclick="scoreClick(141);">141. White in 3:  <span class="result141"></span></a></li>
+<li class="matein2  White  unsolved  score142" ><a onclick="scoreClick(142);">142. White in 2:  <span class="result142"></span></a></li>
+<li class="matein3  White  unsolved  score143" ><a onclick="scoreClick(143);">143. White in 3:  <span class="result143"></span></a></li>
+<li class="matein5  White  unsolved  score144" ><a onclick="scoreClick(144);">144. White in 5:  <span class="result144"></span></a></li>
+<li class="matein4  White  unsolved  score145" ><a onclick="scoreClick(145);">145. White in 4:  <span class="result145"></span></a></li>
+<li class="matein3  White  unsolved  score146" ><a onclick="scoreClick(146);">146. White in 3:  <span class="result146"></span></a></li>
+<li class="matein2  White  unsolved  score147" ><a onclick="scoreClick(147);">147. White in 2:  <span class="result147"></span></a></li>
+<li class="matein3  White  unsolved  score148" ><a onclick="scoreClick(148);">148. White in 3:  <span class="result148"></span></a></li>
+<li class="matein3  White  unsolved  score149" ><a onclick="scoreClick(149);">149. White in 3:  <span class="result149"></span></a></li>
+<li class="matein3  White  unsolved  score150" ><a onclick="scoreClick(150);">150. White in 3:  <span class="result150"></span></a></li>
+
+<li class="matein3  Black  unsolved  score151" ><a onclick="scoreClick(151);">151. Black in 3:  <span class="result151"></span></a></li>
+<li class="matein3  Black  unsolved  score151" ><a onclick="scoreClick(151);">151. Black in 3:  <span class="result151"></span></a></li>
+<li class="matein2  Black  unsolved  score152" ><a onclick="scoreClick(152);">152. Black in 2:  <span class="result152"></span></a></li>
+<li class="matein4  Black  unsolved  score153" ><a onclick="scoreClick(153);">153. Black in 4:  <span class="result153"></span></a></li>
+<li class="matein2  Black  unsolved  score154" ><a onclick="scoreClick(154);">154. Black in 2:  <span class="result154"></span></a></li>
+<li class="matein2  Black  unsolved  score155" ><a onclick="scoreClick(155);">155. Black in 2:  <span class="result155"></span></a></li>
+<li class="matein3  Black  unsolved  score156" ><a onclick="scoreClick(156);">156. Black in 3:  <span class="result156"></span></a></li>
+<li class="matein3  Black  unsolved  score157" ><a onclick="scoreClick(157);">157. Black in 3:  <span class="result157"></span></a></li>
+<li class="matein3  Black  unsolved  score158" ><a onclick="scoreClick(158);">158. Black in 3:  <span class="result158"></span></a></li>
+<li class="matein3  Black  unsolved  score159" ><a onclick="scoreClick(159);">159. Black in 3:  <span class="result159"></span></a></li>
+<li class="matein4  Black  unsolved  score160" ><a onclick="scoreClick(160);">160. Black in 4:  <span class="result160"></span></a></li>
+<li class="matein5  Black  unsolved  score161" ><a onclick="scoreClick(161);">161. Black in 5:  <span class="result161"></span></a></li>
+<li class="matein2  Black  unsolved  score162" ><a onclick="scoreClick(162);">162. Black in 2:  <span class="result162"></span></a></li>
+<li class="matein5  Black  unsolved  score163" ><a onclick="scoreClick(163);">163. Black in 5:  <span class="result163"></span></a></li>
+<li class="matein5  Black  unsolved  score164" ><a onclick="scoreClick(164);">164. Black in 5:  <span class="result164"></span></a></li>
+<li class="matein2  Black  unsolved  score165" ><a onclick="scoreClick(165);">165. Black in 2:  <span class="result165"></span></a></li>
+<li class="matein2  Black  unsolved  score166" ><a onclick="scoreClick(166);">166. Black in 2:  <span class="result166"></span></a></li>
+<li class="matein3  Black  unsolved  score167" ><a onclick="scoreClick(167);">167. Black in 3:  <span class="result167"></span></a></li>
+<li class="matein2  Black  unsolved  score168" ><a onclick="scoreClick(168);">168. Black in 2:  <span class="result168"></span></a></li>
+<li class="matein4  Black  unsolved  score169" ><a onclick="scoreClick(169);">169. Black in 4:  <span class="result169"></span></a></li>
+<li class="matein5  Black  unsolved  score170" ><a onclick="scoreClick(170);">170. Black in 5:  <span class="result170"></span></a></li>
+<li class="matein3  Black  unsolved  score171" ><a onclick="scoreClick(171);">171. Black in 3:  <span class="result171"></span></a></li>
+<li class="matein2  Black  unsolved  score172" ><a onclick="scoreClick(172);">172. Black in 2:  <span class="result172"></span></a></li>
+<li class="matein3  Black  unsolved  score173" ><a onclick="scoreClick(173);">173. Black in 3:  <span class="result173"></span></a></li>
+<li class="matein4  Black  unsolved  score174" ><a onclick="scoreClick(174);">174. Black in 4:  <span class="result174"></span></a></li>
+<li class="matein2  Black  unsolved  score175" ><a onclick="scoreClick(175);">175. Black in 2:  <span class="result175"></span></a></li>
+<li class="matein2  Black  unsolved  score176" ><a onclick="scoreClick(176);">176. Black in 2:  <span class="result176"></span></a></li>
+<li class="matein2  Black  unsolved  score177" ><a onclick="scoreClick(177);">177. Black in 2:  <span class="result177"></span></a></li>
+<li class="matein3  Black  unsolved  score178" ><a onclick="scoreClick(178);">178. Black in 3:  <span class="result178"></span></a></li>
+<li class="matein3  Black  unsolved  score179" ><a onclick="scoreClick(179);">179. Black in 3:  <span class="result179"></span></a></li>
+<li class="matein7  Black  unsolved  score180" ><a onclick="scoreClick(180);">180. Black in 7:  <span class="result180"></span></a></li>
+<li class="matein5  Black  unsolved  score181" ><a onclick="scoreClick(181);">181. Black in 5:  <span class="result181"></span></a></li>
+<li class="matein2  Black  unsolved  score182" ><a onclick="scoreClick(182);">182. Black in 2:  <span class="result182"></span></a></li>
+<li class="matein6  Black  unsolved  score183" ><a onclick="scoreClick(183);">183. Black in 6:  <span class="result183"></span></a></li>
+<li class="matein5  Black  unsolved  score184" ><a onclick="scoreClick(184);">184. Black in 5:  <span class="result184"></span></a></li>
+<li class="matein2  Black  unsolved  score185" ><a onclick="scoreClick(185);">185. Black in 2:  <span class="result185"></span></a></li>
+<li class="matein3  Black  unsolved  score186" ><a onclick="scoreClick(186);">186. Black in 3:  <span class="result186"></span></a></li>
+<li class="matein2  Black  unsolved  score187" ><a onclick="scoreClick(187);">187. Black in 2:  <span class="result187"></span></a></li>
+<li class="matein4  Black  unsolved  score188" ><a onclick="scoreClick(188);">188. Black in 4:  <span class="result188"></span></a></li>
+<li class="matein4  Black  unsolved  score189" ><a onclick="scoreClick(189);">189. Black in 4:  <span class="result189"></span></a></li>
+<li class="matein3  Black  unsolved  score190" ><a onclick="scoreClick(190);">190. Black in 3:  <span class="result190"></span></a></li>
+<li class="matein4  Black  unsolved  score191" ><a onclick="scoreClick(191);">191. Black in 4:  <span class="result191"></span></a></li>
+<li class="matein4  Black  unsolved  score192" ><a onclick="scoreClick(192);">192. Black in 4:  <span class="result192"></span></a></li>
+<li class="matein3  Black  unsolved  score193" ><a onclick="scoreClick(193);">193. Black in 3:  <span class="result193"></span></a></li>
+<li class="matein2  Black  unsolved  score194" ><a onclick="scoreClick(194);">194. Black in 2:  <span class="result194"></span></a></li>
+<li class="matein2  Black  unsolved  score195" ><a onclick="scoreClick(195);">195. Black in 2:  <span class="result195"></span></a></li>
+<li class="matein2  Black  unsolved  score196" ><a onclick="scoreClick(196);">196. Black in 2:  <span class="result196"></span></a></li>
+<li class="matein7  Black  unsolved  score197" ><a onclick="scoreClick(197);">197. Black in 7:  <span class="result197"></span></a></li>
+<li class="matein8  Black  unsolved  score198" ><a onclick="scoreClick(198);">198. Black in 8:  <span class="result198"></span></a></li>
+<li class="matein4  Black  unsolved  score199" ><a onclick="scoreClick(199);">199. Black in 4:  <span class="result199"></span></a></li>
+<li class="matein3  Black  unsolved  score200" ><a onclick="scoreClick(200);">200. Black in 3:  <span class="result200"></span></a></li>
+
+<li class="matein2  White  unsolved  score201" ><a onclick="scoreClick(201);">201. White in 2:  <span class="result201"></span></a></li>
+<li class="matein2  White  unsolved  score201" ><a onclick="scoreClick(201);">201. White in 2:  <span class="result201"></span></a></li>
+<li class="matein3  White  unsolved  score202" ><a onclick="scoreClick(202);">202. White in 3:  <span class="result202"></span></a></li>
+<li class="matein2  White  unsolved  score203" ><a onclick="scoreClick(203);">203. White in 2:  <span class="result203"></span></a></li>
+<li class="matein2  White  unsolved  score204" ><a onclick="scoreClick(204);">204. White in 2:  <span class="result204"></span></a></li>
+<li class="matein2  White  unsolved  score205" ><a onclick="scoreClick(205);">205. White in 2:  <span class="result205"></span></a></li>
+<li class="matein3  White  unsolved  score206" ><a onclick="scoreClick(206);">206. White in 3:  <span class="result206"></span></a></li>
+<li class="matein3  White  unsolved  score207" ><a onclick="scoreClick(207);">207. White in 3:  <span class="result207"></span></a></li>
+<li class="matein4  White  unsolved  score208" ><a onclick="scoreClick(208);">208. White in 4:  <span class="result208"></span></a></li>
+<li class="matein4  White  unsolved  score209" ><a onclick="scoreClick(209);">209. White in 4:  <span class="result209"></span></a></li>
+<li class="matein3  White  unsolved  score210" ><a onclick="scoreClick(210);">210. White in 3:  <span class="result210"></span></a></li>
+<li class="matein4  White  unsolved  score211" ><a onclick="scoreClick(211);">211. White in 4:  <span class="result211"></span></a></li>
+<li class="matein3  White  unsolved  score212" ><a onclick="scoreClick(212);">212. White in 3:  <span class="result212"></span></a></li>
+<li class="matein6  White  unsolved  score213" ><a onclick="scoreClick(213);">213. White in 6:  <span class="result213"></span></a></li>
+<li class="matein3  White  unsolved  score214" ><a onclick="scoreClick(214);">214. White in 3:  <span class="result214"></span></a></li>
+<li class="matein2  White  unsolved  score215" ><a onclick="scoreClick(215);">215. White in 2:  <span class="result215"></span></a></li>
+<li class="matein5  White  unsolved  score216" ><a onclick="scoreClick(216);">216. White in 5:  <span class="result216"></span></a></li>
+<li class="matein2  White  unsolved  score217" ><a onclick="scoreClick(217);">217. White in 2:  <span class="result217"></span></a></li>
+<li class="matein2  White  unsolved  score218" ><a onclick="scoreClick(218);">218. White in 2:  <span class="result218"></span></a></li>
+<li class="matein2  White  unsolved  score219" ><a onclick="scoreClick(219);">219. White in 2:  <span class="result219"></span></a></li>
+<li class="matein3  White  unsolved  score220" ><a onclick="scoreClick(220);">220. White in 3:  <span class="result220"></span></a></li>
+<li class="matein2  White  unsolved  score221" ><a onclick="scoreClick(221);">221. White in 2:  <span class="result221"></span></a></li>
+<li class="matein3  White  unsolved  score222" ><a onclick="scoreClick(222);">222. White in 3:  <span class="result222"></span></a></li>
+<li class="matein3  White  unsolved  score223" ><a onclick="scoreClick(223);">223. White in 3:  <span class="result223"></span></a></li>
+<li class="matein2  White  unsolved  score224" ><a onclick="scoreClick(224);">224. White in 2:  <span class="result224"></span></a></li>
+<li class="matein4  White  unsolved  score225" ><a onclick="scoreClick(225);">225. White in 4:  <span class="result225"></span></a></li>
+<li class="matein2  White  unsolved  score226" ><a onclick="scoreClick(226);">226. White in 2:  <span class="result226"></span></a></li>
+<li class="matein4  White  unsolved  score227" ><a onclick="scoreClick(227);">227. White in 4:  <span class="result227"></span></a></li>
+<li class="matein3  White  unsolved  score228" ><a onclick="scoreClick(228);">228. White in 3:  <span class="result228"></span></a></li>
+<li class="matein2  White  unsolved  score229" ><a onclick="scoreClick(229);">229. White in 2:  <span class="result229"></span></a></li>
+<li class="matein2  White  unsolved  score230" ><a onclick="scoreClick(230);">230. White in 2:  <span class="result230"></span></a></li>
+<li class="matein7  White  unsolved  score231" ><a onclick="scoreClick(231);">231. White in 7:  <span class="result231"></span></a></li>
+<li class="matein4  White  unsolved  score232" ><a onclick="scoreClick(232);">232. White in 4:  <span class="result232"></span></a></li>
+<li class="matein3  White  unsolved  score233" ><a onclick="scoreClick(233);">233. White in 3:  <span class="result233"></span></a></li>
+<li class="matein2  White  unsolved  score234" ><a onclick="scoreClick(234);">234. White in 2:  <span class="result234"></span></a></li>
+<li class="matein2  White  unsolved  score235" ><a onclick="scoreClick(235);">235. White in 2:  <span class="result235"></span></a></li>
+<li class="matein3  White  unsolved  score236" ><a onclick="scoreClick(236);">236. White in 3:  <span class="result236"></span></a></li>
+<li class="matein2  White  unsolved  score237" ><a onclick="scoreClick(237);">237. White in 2:  <span class="result237"></span></a></li>
+<li class="matein4  White  unsolved  score238" ><a onclick="scoreClick(238);">238. White in 4:  <span class="result238"></span></a></li>
+<li class="matein3  White  unsolved  score239" ><a onclick="scoreClick(239);">239. White in 3:  <span class="result239"></span></a></li>
+<li class="matein6  White  unsolved  score240" ><a onclick="scoreClick(240);">240. White in 6:  <span class="result240"></span></a></li>
+<li class="matein3  White  unsolved  score241" ><a onclick="scoreClick(241);">241. White in 3:  <span class="result241"></span></a></li>
+<li class="matein2  White  unsolved  score242" ><a onclick="scoreClick(242);">242. White in 2:  <span class="result242"></span></a></li>
+<li class="matein3  White  unsolved  score243" ><a onclick="scoreClick(243);">243. White in 3:  <span class="result243"></span></a></li>
+<li class="matein4  White  unsolved  score244" ><a onclick="scoreClick(244);">244. White in 4:  <span class="result244"></span></a></li>
+<li class="matein5  White  unsolved  score245" ><a onclick="scoreClick(245);">245. White in 5:  <span class="result245"></span></a></li>
+<li class="matein3  White  unsolved  score246" ><a onclick="scoreClick(246);">246. White in 3:  <span class="result246"></span></a></li>
+<li class="matein2  White  unsolved  score247" ><a onclick="scoreClick(247);">247. White in 2:  <span class="result247"></span></a></li>
+<li class="matein2  White  unsolved  score248" ><a onclick="scoreClick(248);">248. White in 2:  <span class="result248"></span></a></li>
+<li class="matein4  White  unsolved  score249" ><a onclick="scoreClick(249);">249. White in 4:  <span class="result249"></span></a></li>
+<li class="matein3  White  unsolved  score250" ><a onclick="scoreClick(250);">250. White in 3:  <span class="result250"></span></a></li>
+
+<li class="matein3  Black  unsolved  score251" ><a onclick="scoreClick(251);">251. Black in 3:  <span class="result251"></span></a></li>
+<li class="matein3  Black  unsolved  score251" ><a onclick="scoreClick(251);">251. Black in 3:  <span class="result251"></span></a></li>
+<li class="matein2  Black  unsolved  score252" ><a onclick="scoreClick(252);">252. Black in 2:  <span class="result252"></span></a></li>
+<li class="matein2  Black  unsolved  score253" ><a onclick="scoreClick(253);">253. Black in 2:  <span class="result253"></span></a></li>
+<li class="matein2  Black  unsolved  score254" ><a onclick="scoreClick(254);">254. Black in 2:  <span class="result254"></span></a></li>
+<li class="matein3  Black  unsolved  score255" ><a onclick="scoreClick(255);">255. Black in 3:  <span class="result255"></span></a></li>
+<li class="matein3  Black  unsolved  score256" ><a onclick="scoreClick(256);">256. Black in 3:  <span class="result256"></span></a></li>
+<li class="matein4  Black  unsolved  score257" ><a onclick="scoreClick(257);">257. Black in 4:  <span class="result257"></span></a></li>
+<li class="matein2  Black  unsolved  score258" ><a onclick="scoreClick(258);">258. Black in 2:  <span class="result258"></span></a></li>
+<li class="matein2  Black  unsolved  score259" ><a onclick="scoreClick(259);">259. Black in 2:  <span class="result259"></span></a></li>
+<li class="matein1  Black  unsolved  score260" ><a onclick="scoreClick(260);">260. Black in 1:  <span class="result260"></span></a></li>
+<li class="matein3  Black  unsolved  score261" ><a onclick="scoreClick(261);">261. Black in 3:  <span class="result261"></span></a></li>
+<li class="matein2  Black  unsolved  score262" ><a onclick="scoreClick(262);">262. Black in 2:  <span class="result262"></span></a></li>
+<li class="matein3  Black  unsolved  score263" ><a onclick="scoreClick(263);">263. Black in 3:  <span class="result263"></span></a></li>
+<li class="matein3  Black  unsolved  score264" ><a onclick="scoreClick(264);">264. Black in 3:  <span class="result264"></span></a></li>
+<li class="matein2  Black  unsolved  score265" ><a onclick="scoreClick(265);">265. Black in 2:  <span class="result265"></span></a></li>
+<li class="matein2  Black  unsolved  score266" ><a onclick="scoreClick(266);">266. Black in 2:  <span class="result266"></span></a></li>
+<li class="matein3  Black  unsolved  score267" ><a onclick="scoreClick(267);">267. Black in 3:  <span class="result267"></span></a></li>
+<li class="matein2  Black  unsolved  score268" ><a onclick="scoreClick(268);">268. Black in 2:  <span class="result268"></span></a></li>
+<li class="matein2  Black  unsolved  score269" ><a onclick="scoreClick(269);">269. Black in 2:  <span class="result269"></span></a></li>
+<li class="matein3  Black  unsolved  score270" ><a onclick="scoreClick(270);">270. Black in 3:  <span class="result270"></span></a></li>
+<li class="matein3  Black  unsolved  score271" ><a onclick="scoreClick(271);">271. Black in 3:  <span class="result271"></span></a></li>
+<li class="matein3  Black  unsolved  score272" ><a onclick="scoreClick(272);">272. Black in 3:  <span class="result272"></span></a></li>
+<li class="matein2  Black  unsolved  score273" ><a onclick="scoreClick(273);">273. Black in 2:  <span class="result273"></span></a></li>
+<li class="matein3  Black  unsolved  score274" ><a onclick="scoreClick(274);">274. Black in 3:  <span class="result274"></span></a></li>
+<li class="matein2  Black  unsolved  score275" ><a onclick="scoreClick(275);">275. Black in 2:  <span class="result275"></span></a></li>
+<li class="matein1  Black  unsolved  score276" ><a onclick="scoreClick(276);">276. Black in 1:  <span class="result276"></span></a></li>
+<li class="matein2  Black  unsolved  score277" ><a onclick="scoreClick(277);">277. Black in 2:  <span class="result277"></span></a></li>
+<li class="matein6  Black  unsolved  score278" ><a onclick="scoreClick(278);">278. Black in 6:  <span class="result278"></span></a></li>
+<li class="matein4  Black  unsolved  score279" ><a onclick="scoreClick(279);">279. Black in 4:  <span class="result279"></span></a></li>
+<li class="matein3  Black  unsolved  score280" ><a onclick="scoreClick(280);">280. Black in 3:  <span class="result280"></span></a></li>
+<li class="matein3  Black  unsolved  score281" ><a onclick="scoreClick(281);">281. Black in 3:  <span class="result281"></span></a></li>
+<li class="matein2  Black  unsolved  score282" ><a onclick="scoreClick(282);">282. Black in 2:  <span class="result282"></span></a></li>
+<li class="matein3  Black  unsolved  score283" ><a onclick="scoreClick(283);">283. Black in 3:  <span class="result283"></span></a></li>
+<li class="matein4  Black  unsolved  score284" ><a onclick="scoreClick(284);">284. Black in 4:  <span class="result284"></span></a></li>
+<li class="matein1  Black  unsolved  score285" ><a onclick="scoreClick(285);">285. Black in 1:  <span class="result285"></span></a></li>
+<li class="matein4  Black  unsolved  score286" ><a onclick="scoreClick(286);">286. Black in 4:  <span class="result286"></span></a></li>
+<li class="matein3  Black  unsolved  score287" ><a onclick="scoreClick(287);">287. Black in 3:  <span class="result287"></span></a></li>
+<li class="matein1  Black  unsolved  score288" ><a onclick="scoreClick(288);">288. Black in 1:  <span class="result288"></span></a></li>
+<li class="matein2  Black  unsolved  score289" ><a onclick="scoreClick(289);">289. Black in 2:  <span class="result289"></span></a></li>
+<li class="matein2  Black  unsolved  score290" ><a onclick="scoreClick(290);">290. Black in 2:  <span class="result290"></span></a></li>
+<li class="matein2  Black  unsolved  score291" ><a onclick="scoreClick(291);">291. Black in 2:  <span class="result291"></span></a></li>
+<li class="matein5  Black  unsolved  score292" ><a onclick="scoreClick(292);">292. Black in 5:  <span class="result292"></span></a></li>
+<li class="matein3  Black  unsolved  score293" ><a onclick="scoreClick(293);">293. Black in 3:  <span class="result293"></span></a></li>
+<li class="matein3  Black  unsolved  score294" ><a onclick="scoreClick(294);">294. Black in 3:  <span class="result294"></span></a></li>
+<li class="matein5  Black  unsolved  score295" ><a onclick="scoreClick(295);">295. Black in 5:  <span class="result295"></span></a></li>
+<li class="matein5  Black  unsolved  score296" ><a onclick="scoreClick(296);">296. Black in 5:  <span class="result296"></span></a></li>
+<li class="matein5  Black  unsolved  score297" ><a onclick="scoreClick(297);">297. Black in 5:  <span class="result297"></span></a></li>
+<li class="matein7  Black  unsolved  score298" ><a onclick="scoreClick(298);">298. Black in 7:  <span class="result298"></span></a></li>
+<li class="matein2  Black  unsolved  score299" ><a onclick="scoreClick(299);">299. Black in 2:  <span class="result299"></span></a></li>
+<li class="matein3  Black  unsolved  score300" ><a onclick="scoreClick(300);">300. Black in 3:  <span class="result300"></span></a></li>
+
+<li class="matein1  White  unsolved  score301" ><a onclick="scoreClick(301);">301. White in 1:  <span class="result301"></span></a></li>
+<li class="matein1  White  unsolved  score301" ><a onclick="scoreClick(301);">301. White in 1:  <span class="result301"></span></a></li>
+<li class="matein1  White  unsolved  score302" ><a onclick="scoreClick(302);">302. White in 1:  <span class="result302"></span></a></li>
+<li class="matein4  White  unsolved  score303" ><a onclick="scoreClick(303);">303. White in 4:  <span class="result303"></span></a></li>
+<li class="matein2  White  unsolved  score304" ><a onclick="scoreClick(304);">304. White in 2:  <span class="result304"></span></a></li>
+<li class="matein2  White  unsolved  score305" ><a onclick="scoreClick(305);">305. White in 2:  <span class="result305"></span></a></li>
+<li class="matein4  White  unsolved  score306" ><a onclick="scoreClick(306);">306. White in 4:  <span class="result306"></span></a></li>
+<li class="matein2  White  unsolved  score307" ><a onclick="scoreClick(307);">307. White in 2:  <span class="result307"></span></a></li>
+<li class="matein2  White  unsolved  score308" ><a onclick="scoreClick(308);">308. White in 2:  <span class="result308"></span></a></li>
+<li class="matein2  White  unsolved  score309" ><a onclick="scoreClick(309);">309. White in 2:  <span class="result309"></span></a></li>
+<li class="matein2  White  unsolved  score310" ><a onclick="scoreClick(310);">310. White in 2:  <span class="result310"></span></a></li>
+<li class="matein6  White  unsolved  score311" ><a onclick="scoreClick(311);">311. White in 6:  <span class="result311"></span></a></li>
+<li class="matein3  White  unsolved  score312" ><a onclick="scoreClick(312);">312. White in 3:  <span class="result312"></span></a></li>
+<li class="matein2  White  unsolved  score313" ><a onclick="scoreClick(313);">313. White in 2:  <span class="result313"></span></a></li>
+<li class="matein3  White  unsolved  score314" ><a onclick="scoreClick(314);">314. White in 3:  <span class="result314"></span></a></li>
+<li class="matein2  White  unsolved  score315" ><a onclick="scoreClick(315);">315. White in 2:  <span class="result315"></span></a></li>
+<li class="matein3  White  unsolved  score316" ><a onclick="scoreClick(316);">316. White in 3:  <span class="result316"></span></a></li>
+<li class="matein3  White  unsolved  score317" ><a onclick="scoreClick(317);">317. White in 3:  <span class="result317"></span></a></li>
+<li class="matein4  White  unsolved  score318" ><a onclick="scoreClick(318);">318. White in 4:  <span class="result318"></span></a></li>
+<li class="matein8  White  unsolved  score319" ><a onclick="scoreClick(319);">319. White in 8:  <span class="result319"></span></a></li>
+<li class="matein2  White  unsolved  score320" ><a onclick="scoreClick(320);">320. White in 2:  <span class="result320"></span></a></li>
+<li class="matein3  White  unsolved  score321" ><a onclick="scoreClick(321);">321. White in 3:  <span class="result321"></span></a></li>
+<li class="matein2  White  unsolved  score322" ><a onclick="scoreClick(322);">322. White in 2:  <span class="result322"></span></a></li>
+<li class="matein4  White  unsolved  score323" ><a onclick="scoreClick(323);">323. White in 4:  <span class="result323"></span></a></li>
+<li class="matein2  White  unsolved  score324" ><a onclick="scoreClick(324);">324. White in 2:  <span class="result324"></span></a></li>
+<li class="matein2  White  unsolved  score325" ><a onclick="scoreClick(325);">325. White in 2:  <span class="result325"></span></a></li>
+<li class="matein2  White  unsolved  score326" ><a onclick="scoreClick(326);">326. White in 2:  <span class="result326"></span></a></li>
+<li class="matein2  White  unsolved  score327" ><a onclick="scoreClick(327);">327. White in 2:  <span class="result327"></span></a></li>
+<li class="matein2  White  unsolved  score328" ><a onclick="scoreClick(328);">328. White in 2:  <span class="result328"></span></a></li>
+<li class="matein3  White  unsolved  score329" ><a onclick="scoreClick(329);">329. White in 3:  <span class="result329"></span></a></li>
+<li class="matein4  White  unsolved  score330" ><a onclick="scoreClick(330);">330. White in 4:  <span class="result330"></span></a></li>
+<li class="matein2  White  unsolved  score331" ><a onclick="scoreClick(331);">331. White in 2:  <span class="result331"></span></a></li>
+<li class="matein2  White  unsolved  score332" ><a onclick="scoreClick(332);">332. White in 2:  <span class="result332"></span></a></li>
+<li class="matein2  White  unsolved  score333" ><a onclick="scoreClick(333);">333. White in 2:  <span class="result333"></span></a></li>
+<li class="matein2  White  unsolved  score334" ><a onclick="scoreClick(334);">334. White in 2:  <span class="result334"></span></a></li>
+<li class="matein2  White  unsolved  score335" ><a onclick="scoreClick(335);">335. White in 2:  <span class="result335"></span></a></li>
+<li class="matein1  White  unsolved  score336" ><a onclick="scoreClick(336);">336. White in 1:  <span class="result336"></span></a></li>
+<li class="matein1  White  unsolved  score337" ><a onclick="scoreClick(337);">337. White in 1:  <span class="result337"></span></a></li>
+<li class="matein3  White  unsolved  score338" ><a onclick="scoreClick(338);">338. White in 3:  <span class="result338"></span></a></li>
+<li class="matein3  White  unsolved  score339" ><a onclick="scoreClick(339);">339. White in 3:  <span class="result339"></span></a></li>
+<li class="matein1  White  unsolved  score340" ><a onclick="scoreClick(340);">340. White in 1:  <span class="result340"></span></a></li>
+<li class="matein3  White  unsolved  score341" ><a onclick="scoreClick(341);">341. White in 3:  <span class="result341"></span></a></li>
+<li class="matein3  White  unsolved  score342" ><a onclick="scoreClick(342);">342. White in 3:  <span class="result342"></span></a></li>
+<li class="matein3  White  unsolved  score343" ><a onclick="scoreClick(343);">343. White in 3:  <span class="result343"></span></a></li>
+<li class="matein3  White  unsolved  score344" ><a onclick="scoreClick(344);">344. White in 3:  <span class="result344"></span></a></li>
+<li class="matein3  White  unsolved  score345" ><a onclick="scoreClick(345);">345. White in 3:  <span class="result345"></span></a></li>
+<li class="matein1  White  unsolved  score346" ><a onclick="scoreClick(346);">346. White in 1:  <span class="result346"></span></a></li>
+<li class="matein1  White  unsolved  score347" ><a onclick="scoreClick(347);">347. White in 1:  <span class="result347"></span></a></li>
+<li class="matein3  White  unsolved  score348" ><a onclick="scoreClick(348);">348. White in 3:  <span class="result348"></span></a></li>
+<li class="matein2  White  unsolved  score349" ><a onclick="scoreClick(349);">349. White in 2:  <span class="result349"></span></a></li>
+<li class="matein2  White  unsolved  score350" ><a onclick="scoreClick(350);">350. White in 2:  <span class="result350"></span></a></li>
+
+<li class="matein3  Black  unsolved  score351" ><a onclick="scoreClick(351);">351. Black in 3:  <span class="result351"></span></a></li>
+<li class="matein3  Black  unsolved  score351" ><a onclick="scoreClick(351);">351. Black in 3:  <span class="result351"></span></a></li>
+<li class="matein5  Black  unsolved  score352" ><a onclick="scoreClick(352);">352. Black in 5:  <span class="result352"></span></a></li>
+<li class="matein6  Black  unsolved  score353" ><a onclick="scoreClick(353);">353. Black in 6:  <span class="result353"></span></a></li>
+<li class="matein3  Black  unsolved  score354" ><a onclick="scoreClick(354);">354. Black in 3:  <span class="result354"></span></a></li>
+<li class="matein1  Black  unsolved  score355" ><a onclick="scoreClick(355);">355. Black in 1:  <span class="result355"></span></a></li>
+<li class="matein3  Black  unsolved  score356" ><a onclick="scoreClick(356);">356. Black in 3:  <span class="result356"></span></a></li>
+<li class="matein1  Black  unsolved  score357" ><a onclick="scoreClick(357);">357. Black in 1:  <span class="result357"></span></a></li>
+<li class="matein2  Black  unsolved  score358" ><a onclick="scoreClick(358);">358. Black in 2:  <span class="result358"></span></a></li>
+<li class="matein2  Black  unsolved  score359" ><a onclick="scoreClick(359);">359. Black in 2:  <span class="result359"></span></a></li>
+<li class="matein6  Black  unsolved  score360" ><a onclick="scoreClick(360);">360. Black in 6:  <span class="result360"></span></a></li>
+<li class="matein2  Black  unsolved  score361" ><a onclick="scoreClick(361);">361. Black in 2:  <span class="result361"></span></a></li>
+<li class="matein3  Black  unsolved  score362" ><a onclick="scoreClick(362);">362. Black in 3:  <span class="result362"></span></a></li>
+<li class="matein1  Black  unsolved  score363" ><a onclick="scoreClick(363);">363. Black in 1:  <span class="result363"></span></a></li>
+<li class="matein1  Black  unsolved  score364" ><a onclick="scoreClick(364);">364. Black in 1:  <span class="result364"></span></a></li>
+<li class="matein3  Black  unsolved  score365" ><a onclick="scoreClick(365);">365. Black in 3:  <span class="result365"></span></a></li>
+<li class="matein2  Black  unsolved  score366" ><a onclick="scoreClick(366);">366. Black in 2:  <span class="result366"></span></a></li>
+
+        </ul>
+
+        <script language="JavaScript">updatePuzzleList();</script>
+
+</div>
+
+
+<!-- Settings -->
+<div id="settings">
+    <div class="toolbar">
+      <a class="goback" href="#home"><img src="images/back.svg"></a>
+        <h1>Settings</h1>
+    </div>
+
+  <ul class="rounded">
+    <li class="arrow"><a href="#tutorial">Tutorial</a></li>
+    <!-- <li class="arrow"><a href="#moreapps">More chess apps</a></li> -->
+    <li class="arrow"><a href="#reportbug">Report an error</a></li>
+    <li class="arrow">
+      <span class="audiosettingsoff" ><a>Turn audio off</a></span>
+      <span class="audiosettingson" ><a>Turn audio on</a></span></li>
+
+    <li class="arrow"><a href="#reset">App reset</a></li>
+  </ul>
+</div>
+
+
+<!-- Report a Bug -->
+<div id="reportbug">
+    <div class="toolbar">
+      <a class="goback" href="#settings"><img src="images/back.svg"></a>
+        <h1>Report a bug</h1>
+    </div>
+
+<ul class="rounded">
+  <li>Think you found an error in one of the puzzles? Sorry about that. While we have tried really hard to keep our database of puzzles error-free there still might be a few glitches. If you have a second would you mind sending us a note documenting the error you found? Thanks! Here's what to do: </li>
+    
+    <li>1. Figure out what puzzle number the error occurred in. </li>
+    <li>2. Document what kind of error you found. Popular choices are: multiple mate options, valid moves showing as errors, and duplicate puzzle.</li>
+    <li>3. This one is optional. Describe the error. The more info the better, but don't stress about it if you don't have time to explain what you are seeing.</li>
+    <li>4. Finally, put that into an email and send it to:</br> <a href="mailto:designer@adrianhanft.com?subject=Chess%20Puzzle%20Error%20Report">designer@adrianhanft.com</a></li>
+    <li>5. That's it. I really appreciate your help and will release updates as soon as I can. Thank you very much for your help!</li>
+</ul>
+<ul class="rounded">
+  <li>If you run into any issues like puzzles unlocking, email me at <a href="mailto:designer@adrianhanft.com?subject=Chess%20Puzzle%20Purchase%20Error" onclick="secretUnlockAll();" style="display:inline;">designer@adrianhanft.com</a> and I can help you out.</li>
+</ul>
+</div>
+
+
+<!-- More Apps -->
+<div id="moreapps">
+   <div class="toolbar">
+     <a class="goback" href="#home"><img src="images/back.svg"></a>
+        <h1>More Apps</h1>
+    </div>
+
+          <ul class="rounded">                  
+              <li class="arrow"><a target="_blank" href="https://itunes.apple.com/be/app/chess-server/id998153813?mt=8"><img class="chessicon" src="images/players/chess-server-1024x1024.png" width="57" height="57">Chess Server</a></li>
+              <li class="arrow"><a target="_blank" href="http://itunes.apple.com/us/app/eugene-chess-hd/id418816633?mt=8"><img class="chessicon" src="images/players/eugene-1024x1024.png" width="57" height="57">Eugene Chess</a></li>
+              <li class="arrow"><a target="_blank" href="http://design.adrian3.com/chess-messages.html"><img class="chessicon" src="images/players/chess-messages-1024x1024.png" width="57" height="57">Chess Messages</a></li>
+
+              <li class="arrow"><a target="_blank" href="https://itunes.apple.com/us/app/immortal-game-greatest-chess/id613890349?mt=8"><img class="chessicon" src="images/players/immortal-game.png" width="57" height="57">Immortal Game</a></li>
+              <li class="arrow"><a target="_blank" href="https://itunes.apple.com/us/app/grandmaster-archive/id471186727?mt=8"><img class="chessicon" src="images/players/grandmasterarchive.png" width="57" height="57">Grandmaster Archive<br />($4.99)</a></li>
+          </ul>
+</div>
+
+
+
+<!-- Credits -->
+<div id="credits">
+    <div class="toolbar">
+        <!-- <h1>Credits</h1> -->
+		<a class="goback" href="#home"><img src="images/back.svg"></a>
+    </div>
+<div class="horizontal-center">
+<div class="horizontal-center-inner">  
+			    <img class="bio_photo" src="images/players/adrian.png" width="300" height="300">
+        <h1>Adrian Hanft, III</h1>
+        <h3>Designer/Developer</h3>
+        <h3><a href="http://adrian3.com" target="_blank">Adrian3.com</a></h3>
+        <p>Thank you for purchasing this app. I hope you enjoyed it. My name is Adrian Hanft, III. I have loved chess since about fifth grade when my dad taught me how to play. Thanks, dad. In addition to creating this app, I am also a designer, photographer, and web developer. If you enjoyed this app, you might also like my chess apps:</p>
+        <p><a target="_blank" href="http://itunes.apple.com/us/app/eugene-chess-hd/id418816633?mt=8">Eugene Chess (Free)</a><br />
+        <p><a target="_blank" href="https://itunes.apple.com/be/app/chess-server/id998153813?mt=8">Chess Server (Free)</a><br />
+        <p><a target="_blank" href="https://itunes.apple.com/us/app/immortal-game-greatest-chess/id613890349?mt=8">Immortal Game ($0.99)</a><br />
+        <p><a target="_blank" href="http://itunes.apple.com/us/app/bobby-fischer-complete-collection/id426892039?mt=8#">Bobby Fischer Pro, $1.99</a></p>
+        <!-- <p><a target="_blank" href="http://itunes.apple.com/us/app/chess-puzzles-pro/id432827559?mt=8#">Chess Puzzles Pro, $1.99</a></p> -->
+<!--        <p><a target="_blank" href="http://itunes.apple.com/us/app/chess-grand-masterpieces/id417675080?mt=8#">Grand Masterpiece, $0.99</a></p>
+ -->        <p><a target="_blank" href="https://itunes.apple.com/us/app/grandmaster-archive/id471186727?mt=8">Grandmaster Archive, $4.99</a></p>
+        <p>Please follow my writing at <a target="_blank" href="http://www.adrian3.com">adrian3.com</a> and follow me on Twitter <a target="_blank" href="https://twitter.com/ade3">@ade3</a>. Thanks again for your support.
+        </p>
+</div>
+</div>
+</div>
+
+
+
+<!-- Reset App -->
+<div id="reset">
+    <div class="toolbar">
+      <a class="goback" href="#settings"><img src="images/back.svg"></a>
+        <h1>Master Reset</h1>
+    </div>
+
+  <ul class="rounded">
+    <li>Warning: All progress will be lost and there isn't an undo.</li>
+    <li><a class="masterdelete" onclick="appReset();">Click here to restore all default settings.</a>
+        <!-- <a href="#puzzles" onclick="appReset();">Click here to completely reset this app.</a> -->
+        <li>Otherwise, click the back button above to cancel.</li>
+  </ul>
+</div>
+
+
+<!-- Tutorial -->
+<div id="tutorial">
+    <div class="toolbar">
+      <a class="goback" href="#home"><img src="images/back.svg"></a>
+        <h1>Tutorial</h1>
+    </div>
+    <ul class="rounded">
+      <li>Assuming you know the rules of chess, using this app should be relatively easy. Here are a few tips to get you started solving puzzles: </li>
+        <li>1. To move a piece, first tap on it. This will highlight the piece with an orange outline. </li>
+        <li>2. Now tap on the square that you want to move to. If this move doesn't correctly solve the puzzle you can try again. If it is the correct move, you continue on with the puzzle. </li>
+        <li>3. If you make 3 wrong moves in a row a question mark "hint" icon will appear. Tapping on this icon will make the correct move for you. </li>
+        <li>4. At the bottom of you screen at all times is a puzzle button. Tapping on this will remind you how many moves it will take to solve the current puzzle. </li>
+        <li>5. That's it. Want to give it a try?<br />
+          <a href="#puzzles" onclick="scoreClick(0);">Tap here for a simple example.</a>
+        </li>
+    </ul>
+</div>
+
+
+
+
+</div> <!-- End JQT -->
 </body>
 </html>
