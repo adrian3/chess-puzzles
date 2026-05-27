@@ -1,0 +1,9 @@
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 width="27.36px" height="27.359px" viewBox="45 0 27.36 27.359" enable-background="new 45 0 27.36 27.359" xml:space="preserve">
+	<style>.iconcolorlight { fill: #e2e2e2; } .iconcolordark { fill: #31b5f0; } </style>
+<path class="iconcolordark" fill="#D7C6B5"  d="M58.454,1.25c-6.94,0-12.586,5.646-12.586,12.586s5.646,12.586,12.586,12.586S71.04,20.777,71.04,13.837
+	S65.394,1.25,58.454,1.25z"/>
+	<path class="iconcolorlight" fill="#D7C6B5"  d="M58.454,26.423c-6.94,0-12.586-5.646-12.586-12.586S51.514,1.25,58.454,1.25S71.04,6.897,71.04,13.837
+		S65.394,26.423,58.454,26.423z M58.454,3.25c-5.837,0-10.586,4.749-10.586,10.586s4.749,10.586,10.586,10.586
+		S69.04,19.674,69.04,13.837S64.291,3.25,58.454,3.25z"/>
+</svg>

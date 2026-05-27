@@ -1,0 +1,6 @@
+<svg version="1.1" id="blackbishop" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px"
+	 y="0px" width="32px" height="32px" viewBox="0 0 32 32" enable-background="new 0 0 32 32" xml:space="preserve">
+	<style>.piecehighlight { fill: #e2e2e2; } .piecedarkness { fill: #666666; }</style>
+<polygon class="piecedarkness" points="15.829,2.615 19.376,12.708 30.167,12.925 21.562,19.378 24.691,29.604 15.829,23.504 6.967,29.604 10.093,19.378 
+	1.491,12.925 12.282,12.708 "/>
+</svg>

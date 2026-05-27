@@ -1,0 +1,1018 @@
+@font-face {
+  font-family: 'OpenSansCondensedLight';
+  src: url("../fonts/OpenSans-CondLight-webfont.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal; }
+* {
+  -webkit-touch-callout: none;
+  /* prevent callout to copy image, etc when tap to hold */
+  -webkit-text-size-adjust: none;
+  /* prevent webkit from resizing text to fit */
+  -webkit-tap-highlight-color: transparent;
+  /* prevent tap highlight color / shadow */
+  -webkit-user-select: none;
+  /* prevent copy paste, to allow, change 'none' to 'text' */ }
+
+#jqt, a, .toolbar h1, h1, h2, ul li, li.arrow, #tabbar a > strong {
+    font-family: -apple-system, "OpenSansCondensedLight","Helvetica Neue", "Lucida Grande";
+ }
+
+#jqt li.pages {
+  margin-bottom: 50px;
+  /*display: none;*/ }
+
+#jqt {
+  background-color: white; }
+
+body {
+  color: #e2e2e2;
+  background-color: #fff;
+  text-align: left;
+  margin: 0px;
+  padding: 0px; }
+
+td#movehighlightbgcolor img {
+  background-color: rgba(0, 174, 239, 0.9); }
+
+a {
+  color: #000;
+  text-decoration: none;
+  border-bottom: 0px; }
+
+a.list.arrow {
+  display: inline-block;
+  margin: 0px 10px 0 0;
+  padding: 0;
+  width: 260px;
+  float: left;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap; }
+  @media only screen and (min-device-width: 768px) and (max-device-width: 1024px) {
+    a.list.arrow {
+      width: 500px; } }
+
+a.infobutton.active {
+  background-color: transparent; }
+
+h1, h2 {
+  font: bold 18px Helvetica;
+  color: #fff;
+  margin: 0px 20px 5px 0; }
+
+ul.rounded {
+  width: 300px;
+  margin: 20px auto;
+  min-height: 20px; }
+  @media only screen and (min-device-width: 768px) and (max-device-width: 1024px) {
+    ul.rounded {
+      width: 500px; } }
+
+ul.rounded li.pages a {
+  float: left; }
+
+ul.rounded li.pages a.navslide {
+  margin: 0; }
+
+ul.gamenav {
+  margin: -155px 0 0 0;
+  border-width: 0px; }
+
+ul li {
+  font-size: 16px;
+  color: #666666;
+  text-decoration: none;
+  padding: 12px 10px 12px 10px;
+  margin: 0px; }
+
+ul li a {
+  font-size: 16px;
+  display: inline; }
+
+ul li.arrow {
+  display: block;
+  padding: 9px 0 0 9px;
+  background-image: url(../images/chevron.svg), -webkit-gradient(linear, 0% 0, 0% 100%, from(#444444), to(#333333));
+  height: 30px;
+  overflow: hidden; }
+
+ul li form#showform input {
+  display: block; }
+
+li.solved {
+  background-image: url(../images/checkmark-white.svg);
+  background-repeat: no-repeat;
+  background-position: right;
+  background-color: rgba(0, 174, 239, 0.2); }
+
+li.locked {
+  background-image: url(../images/lock.svg);
+  background-repeat: no-repeat;
+  background-position: right;
+  background-color: #cacaca; }
+
+ul.listnav {
+  margin: 0 auto;
+  border-width: 0px; }
+
+ul.listnav li {
+  width: 320px;
+  margin: -1px auto 0 auto;
+  color: #666666;
+  border-color: #ccc;
+  background-image: none;
+  background-color: #fff; }
+
+ul li, ul {
+  border-color: #19acee; }
+
+ul li.arrow {
+  background: url(../images/chevron.svg) no-repeat right; }
+
+ul li {
+  background-image: none; }
+
+#listpuzzle1 ul li a, ul li a, ul li.arrow a {
+  color: #000;
+  text-shadow: none; }
+
+#listpuzzle1 .toolbar, .toolbar {
+  background-color: #19acee; }
+
+#listpuzzle1 ul li a {
+  display: block;
+  padding: 10px; }
+
+#listpuzzle1 ul li a:first-child {
+  margin-left: 0px;
+  margin-right: 0px;
+  font-size: 14px; }
+
+#listpuzzle1 ul.listnav li a {
+  color: #666666;
+  text-shadow: none;
+  display: inline;
+  padding: 10px 7px;
+  }
+
+ul#gamelist li {
+  list-style-type: decimal;
+  list-style-position: inside; }
+
+ul#headerconnected {
+  margin-bottom: -25px; }
+
+ul#headerconnected li {
+  padding-bottom: 20px; }
+
+ul.edgetoedge #gamelist li {
+  list-style-type: decimal;
+  list-style-position: inside;
+  color: #fffeff; }
+
+ul.gamenav li.previous, ul.gamenav li.next {
+  background-color: transparent;
+  background-image: none;
+  border-width: 0; }
+
+ul li a, li.img a + a {
+  text-decoration: none;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  display: block;
+  padding: 12px 10px 12px 10px;
+  margin: -10px; }
+
+ul.rounded li.title {
+  background-color: #19acee;
+  color: #666666; }
+
+li.piecestyle, li.boardstyle, li.currentgame, li.difficultylevel, li.boardside, li.y1 {
+  display: none; }
+
+li.pages a {
+  padding: 0 5px;
+  color: #fff; }
+
+li form textarea, ul li form input {
+  display: none; }
+
+li.pages a.underline {
+  text-decoration: underline; }
+
+.underline {
+  text-decoration: underline; }
+
+li.next {
+  width: 60px;
+  margin: -30px 0 0 440px;
+  float: left; }
+
+li.arrow {
+  overflow: hidden; }
+
+li.previous {
+  margin: -10px 0 0 50px;
+  width: 70px;
+  float: left; }
+
+li.previous, li.next {
+  font-size: 10px; }
+
+#moreapps li.arrow {
+  height: 70px; }
+
+#moreapps a {
+  color: #666; }
+
+#moreapps li.title, #achievements li.title {
+  color: #fff; }
+
+#moreapps img {
+  -webkit-border-radius: 9px; }
+
+#moreapps .toolbar img {
+  -webkit-border-radius: 0px; }
+
+#credits {
+  color: #333; }
+
+#credits a {
+  text-decoration: underline;
+  font-size: 16px; }
+
+#credits p {
+  font-size: 16px;
+  padding: 10px;
+  line-height: 20px;
+  max-width: 570px; }
+
+#credits h3, #credits h1 {
+  padding-left: 10px; }
+
+#credits img.bio_photo {
+  width: 150px;
+  height: 150px;
+  margin: 10px 105px 10px 10px;
+  border-radius: 30px; }
+  @media only screen and (min-device-width: 768px) and (max-device-width: 1024px) {
+    #credits img.bio_photo {
+      width: 250px;
+      height: 250px;
+      margin: 10px 259px;
+      border-radius: 60px; } }
+
+.previous a.goback, .next a.slideup, .previous a.firstlink {
+  text-indent: -999px;
+  width: 50px;
+  height: 50px;
+  margin: 0;
+  padding: 0; }
+
+td#buttons {
+  margin: 0px 0 0 0;
+  padding: 20px 0 15px; }
+
+.toolbar a {
+  color: #ffffff; }
+
+.info p {
+  text-align: left;
+  max-width: 500px;
+  padding: 10px 0 0; }
+
+.info p a {
+  color: #333;
+  font-weight: bold;
+  text-decoration: underline; }
+
+a.goback img, a.back img {
+  width: 40px; }
+
+div.toolbar {
+  list-style-type: none; }
+
+#hide, .hide, .playit {
+  display: none; }
+
+.bullets {
+  margin: 8px 30px 0 0;
+  text-align: center; }
+
+.bullets img.active {
+  background-color: transparent; }
+
+.bullets img {
+  width: 15px; }
+
+.bullet0, .bullet1, .bullet2, .bullet3, .bullet4, .bullet5, .bullet6, .bullet7, .bullet8, .bullet9, .bullet10, .bullet11 {
+  padding: 3px; }
+
+.bullets a.checkmark img, .bullets a.questionmark img {
+  position: absolute;
+  padding: 1px 10px 5px 5px; }
+
+.bullets a.questionmark img {
+  width: 11px;
+  height: 11px; }
+
+.info {
+  max-width: 320px;
+  margin: 10px auto;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+  -webkit-border-radius: 5px; }
+
+.small {
+  display: inline;
+  font-size: 10px; }
+
+.icon {
+  display: inline; }
+
+.logo {
+  margin: 20px 0 0 0;
+  text-align: center; }
+
+hr {
+  width: 30%;
+  margin-top: 32px;
+  margin-bottom: 24px; }
+
+#pgnTable {
+  width: auto;
+  height: auto;
+  margin-left: auto;
+  margin-right: auto;
+  border-collapse: collapse;
+  border: 0; }
+
+#pgnTable tr td {
+  padding: 2px; }
+
+input {
+  background: transparent;
+  border: none; }
+
+#buttonNextMove {
+  width: 24px;
+  float: right;
+  height: 22px;
+  margin: 2px -2px -22px 5px;
+  background: url("../images/help.svg") no-repeat top right;
+  color: transparent; }
+  @media only screen and (min-device-width: 768px) and (max-device-width: 1024px) {
+    #buttonNextMove {
+      margin: 10px -2px -22px 5px; } }
+
+form a {
+  color: #fff; }
+
+span.intLink, #chessClosePanel {
+  cursor: pointer; }
+
+a#selectKnight, a#selectBishop, a#selectQueen, a#selectRook {
+  margin: 0;
+  padding: 0 5px 0 0px; }
+
+#home h1 {
+  width: 310px;
+  margin: 10px auto -10px auto; }
+
+span.audiosettingsoff, span.audiosettingson {
+  font-weight: normal;
+  font-size: 12px; }
+
+img.chessicon {
+  margin: 0 10px 0 0;
+  float: left; }
+
+#home {
+  background-color: #00aeef; }
+
+#home ul {
+  background-color: #fff; }
+
+/* @group Bottom Bar */
+#bottombar {
+  background: -webkit-gradient(linear, left top, left bottom, from(black), to(black), color-stop(0.01, black), color-stop(0.02, #555555), color-stop(0.03, #2d2d2d), color-stop(0.5, #151515), color-stop(0.51, black));
+  min-height: 38px;
+  display: block;
+  width: 100%;
+  z-index: 900000 !important;
+  -webkit-box-shadow: 0 -0.05em 0 rgba(0, 0, 0, 0.9);
+  position: absolute;
+  bottom: 0; }
+
+#bottombar ul {
+  width: 100%;
+  border-width: 0;
+  margin: 0;
+  padding: 0;
+  min-height: 38px;
+  display: block; }
+
+#bottombar ul li {
+  width: 20%;
+  float: left;
+  display: inline-block;
+  margin: 0;
+  padding: 7px 0 0 0;
+  border-width: 0;
+  text-align: center;
+  background-image: none;
+  font-weight: normal; }
+
+#jqt #bottombar a:active {
+  background-color: #00aeef; }
+
+#jqt #tab_2 img {
+  margin-top: -5px; }
+
+#jqt #tab_4 img, #jqt #tab_3 img {
+  margin-top: 2px; }
+
+#jqt #tab_1 img, #jqt #tab_5 img {
+  margin-top: -5px; }
+
+#jqt #tab_1:active,
+#jqt #tab_2:active,
+#jqt #tab_3:active,
+#jqt #tab_4:active,
+#jqt #tab_5:active {
+  background-color: #000000; }
+
+#jqt a.list:active, #tab_1 a:active, #tab_2 a:active, #tab_3 a:active, #tab_4 a:active, #tab_5 a:active {
+  color: #fff; }
+
+/* @end */
+/* @group Jquery Notifications */
+#jNotify, #jSuccess, #jError {
+  font-size: 20px; }
+
+#jNotify {
+  width: 100%;
+  position: absolute;
+  color: #19acee;
+  padding: 10px;
+  margin: 15px 0px 20px 10px;
+  z-index: 9999;
+  background-color: transparent; }
+
+#jNotify a {
+  color: #35517c !important;
+  text-decoration: none; }
+
+#jSuccess {
+  width: 260px;
+  position: absolute;
+  background: white url("../images/success.svg") no-repeat 15px center;
+  color: #666666;
+  padding: 10px;
+  padding-left: 50px;
+  margin: 15px 0px 40px 0px;
+  z-index: 9999;
+  background-color: transparent;
+ }
+  @media only screen and (min-device-width: 768px) and (max-device-width: 1024px) {
+    #jSuccess {
+      width: 100%; } }
+
+#jSuccess a {
+  color: #264409 !important;
+  text-decoration: none; }
+
+#jError {
+  width: 100%;
+  position: absolute;
+  /*background: #ffffff  url('../images/error.svg') no-repeat 15px center;*/
+  color: #666666;
+  padding: 10px;
+  padding-left: 50px;
+  margin: 15px 0px 40px 10px;
+  z-index: 9999;
+  background-color: transparent; }
+
+#jError a {
+  color: #666666 !important;
+  text-decoration: none; }
+
+#jOverlay {
+  width: 100%;
+  min-height: 480px;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 9998; }
+  @media only screen and (min-device-width: 768px) and (max-device-width: 1024px) {
+    #jOverlay {
+      min-height: 1024px; } }
+
+#puzzles.home #jNotify {
+  color: #fff;
+  margin: 0 0 100px 0;
+  padding: 0 15px;
+  width: 290px;
+  border-width: 0;
+  background: none;
+  font-size: 14px;
+  line-height: 16px; }
+  @media only screen and (min-device-width: 768px) and (max-device-width: 1024px) {
+    #puzzles.home #jNotify {
+      width: 330px;
+      margin: 150px; } }
+
+.home_photo {
+  float: right;
+  margin: -3px 0 0px 15px; }
+
+/* @end */
+/* @group Puzzles */
+#chessboard {
+  margin: 0px 0 0 0px;
+  padding: 0px 0px 0px 0px;
+/*  height: 304px; }
+  @media only screen and (min-device-width: 768px) and (max-device-width: 1024px) {
+    #chessboard {
+      margin: 0px auto 0px auto;
+      padding: 17px 0px 0px 0px;
+      width: 768px;
+      min-height: 616px; }*/
+       }
+
+table {
+  border-collapse: collapse; }
+
+#chessboard table td {
+  border-width: 0px;
+  padding: 0;
+  margin: 0px;
+  background-color: transparent; }
+
+#Board {
+  height: 304px;
+  width: 304px;
+  background: white url("../images/bamboo.svg") no-repeat 0px 0px;
+  margin: 0 auto;
+  border-radius: 10px;
+  /*-webkit-box-shadow: 1px 1px 8px 0px #999;*/
+   }
+/*  @media only screen and (min-device-width: 768px) and (max-device-width: 1024px) {
+    #Board {
+      width: 616px;
+      height: 616px;
+      border-radius: 20px;
+      background: url("../images/bamboo-large.svg") no-repeat 0px 0px; }
+    } */
+
+/*#Board table {
+  border-radius: 10px; }
+  @media only screen and (min-device-width: 768px) and (max-device-width: 1024px) {
+    #Board table {
+      border-radius: 20px; } }*/
+
+/*#Board table .tutorialArrow {
+  width: 304px; }
+
+#Board table.tutorialArrow {
+  background: url("../images/arrow.svg") no-repeat; }
+  @media only screen and (min-device-width: 768px) and (max-device-width: 1024px) {
+    #Board table.tutorialArrow {
+      background: url("../images/arrow-large.svg") no-repeat; } }*/
+
+#Board table.solved {
+  background-color: rgba(0, 174, 239, 0.5); }
+
+#Board .highlight {
+  background-color: rgba(0, 174, 239, 0.9); }
+
+#Board .unhighlight {
+  /*background-color: rgba(255, 153, 0, 0);*/
+  -webkit-transition: background-color 500ms linear; }
+
+#Board .coloron {
+  background-color: #00aeef !important; }
+
+#Board .coloroff {
+  background-color: rgba(0, 174, 239, 0); }
+
+a.demohomebutton {
+  margin: -30px 0 0 10px; }
+
+table, td, tr {
+  border-width: 0px;
+  margin: 0px;
+  padding: 0px; }
+
+#Board img {
+  width: 38px;
+  height: 38px;
+  padding: 0 0px;
+  margin: 0px; }
+/*  @media only screen and (min-device-width: 768px) and (max-device-width: 1024px) {
+    #Board img {
+      width: 77px;
+      height: 77px; }
+       } */
+
+#Board div {
+  width: 38px;
+  height: 38px; }
+/*  @media only screen and (min-device-width: 768px) and (max-device-width: 1024px) {
+    #Board div {
+      width: 77px;
+      height: 77px; }
+    } */
+
+#Board table tbody tr {
+  float: left;
+  height: 38px; }
+/*  @media only screen and (min-device-width: 768px) and (max-device-width: 1024px) {
+    #Board table tbody tr {
+      height: 77px; }
+       }
+
+a, b {
+  color: #00aeef;
+  font-weight: normal;
+  font-size: 12px; }
+
+a.previous {
+  float: left;
+  font-size: 11px;
+  padding: 0px 10px 10px;
+  margin: -20px 0 0 0; }
+  @media only screen and (min-device-width: 768px) and (max-device-width: 1024px) {
+    a.previous {
+      margin: -35px 0px 0 10px; } }
+
+a.next {
+  float: left;
+  font-size: 11px;
+  padding: 0px 10px 10px;
+  margin: -20px 0 0 0;
+  padding-left: 10px; }
+  @media only screen and (min-device-width: 768px) and (max-device-width: 1024px) {
+    a.next {
+      margin: -35px 0px 0 70px; } }
+
+input#btnInit, input#btnMB10, input#btnMB1, input#btnMF1, input#btnMF10, input#btnMF1000 {
+  color: transparent;
+  margin: 0;
+  padding: 0px;
+  height: 22px;
+  border: none;
+  display: none; }
+
+#buttons select {
+  display: none; }
+
+input#btnPlay {
+  background-color: transparent;
+  color: #fff;
+  margin: 0;
+  padding: 0px;
+  border: none;
+  padding: 6px 0 0 0;
+  display: none; }
+
+td {
+  vertical-align: top; }
+
+.labels {
+  display: none; }
+
+input#inpPos {
+  position: absolute;
+  background-color: transparent;
+  border: none;
+  color: #fff;
+  height: 22px;
+  margin: 41px 0 0 110px;
+  -webkit-appearance: none;
+  display: none; }
+
+.hide {
+  display: none; }
+
+.show {
+  display: block; }
+
+#buttons {
+  float: right;
+  position: absolute;
+  margin: 0 0 0 210px; }
+  @media only screen and (min-device-width: 768px) and (max-device-width: 1024px) {
+    #buttons {
+      width: 560px;
+      margin: -105px auto 20px auto;
+      padding: 0 10px 0 15px;
+      color: #000;
+      text-align: right; } }
+
+#ranking {
+  float: left;
+  margin: -5px 0 0 5px; }
+  @media only screen and (min-device-width: 768px) and (max-device-width: 1024px) {
+    #ranking {
+      margin: 5px 0 0 40px; } }
+
+.levelbutton img, .awardsbutton img, .flagbutton img, .rankbutton img, .settingsbutton img, .historybutton img {
+  height: 24px;
+  width: 24px;
+  position: absolute; }
+
+#tutorial ul.rounded li {
+  color: #000000;
+  font-size: 16px;
+  font-weight: normal;
+  line-height: 19px; }
+
+#tutorial ul.rounded li a {
+  text-decoration: underline; }
+
+/* @end */
+
+#gameText {
+  color: #000;
+  float: left;
+  height: 22px;
+  margin: 7px 0px 2px 7px;
+  display: block;
+  font-size: 12px; }
+  @media only screen and (min-device-width: 768px) and (max-device-width: 1024px) {
+    #gameText {
+      margin: -15px 0 0 120px; } }
+
+#gameText a, #gameText b {
+  color: #000;
+  padding: 2px 2px; }
+
+/* @group Retina iPhone */
+@media only screen and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min-device-pixel-ratio: 1.5) {
+  #puzzles {
+    padding-top: 0px;
+    margin: 0px 0 0 0px; } }
+/* @end */
+
+
+/* iPad Portrait */
+@media only screen 
+  and (min-device-width: 768px) 
+  and (max-device-width: 1024px) 
+  and (orientation: portrait) 
+ {
+/*    #chessboard {
+      margin-top: 10vh;
+    }*/
+}
+
+/* iPad Landscape */
+@media only screen 
+  and (min-device-width: 768px) 
+  and (max-device-width: 1024px) 
+  and (orientation: landscape) 
+ {
+
+}
+
+
+
+/* iphone 6 plus */
+@media only screen and (min-device-width : 414px) and (max-device-width : 736px) { 
+/*  #chessboard {
+    margin-top: 125px;
+  }*/
+  .logo {
+    margin-top: 100px;    
+    margin-bottom: 20px;    
+  }
+}
+
+/* iphone 6 */
+@media only screen and (min-device-width : 375px) and (max-device-width : 667px) { 
+/*  #chessboard {
+    margin-top: 90px;
+  }*/
+  .logo {
+    margin-top: 75px;    
+    margin-bottom: 50px;    
+  }
+}
+
+.square0,  #Board .square0.unhighlight, #Board .square0.coloroff,
+.square2,  #Board .square2.unhighlight, #Board .square2.coloroff,
+.square4,  #Board .square4.unhighlight, #Board .square4.coloroff,
+.square6,  #Board .square6.unhighlight, #Board .square6.coloroff,
+.square9,  #Board .square9.unhighlight, #Board .square9.coloroff,
+.square11, #Board .square11.unhighlight, #Board .square11.coloroff,
+.square13, #Board .square13.unhighlight, #Board .square13.coloroff,
+.square15, #Board .square15.unhighlight, #Board .square15.coloroff,
+.square16, #Board .square16.unhighlight, #Board .square16.coloroff,
+.square18, #Board .square18.unhighlight, #Board .square18.coloroff,
+.square20, #Board .square20.unhighlight, #Board .square20.coloroff,
+.square22, #Board .square22.unhighlight, #Board .square22.coloroff,
+.square25, #Board .square25.unhighlight, #Board .square25.coloroff,
+.square27, #Board .square27.unhighlight, #Board .square27.coloroff,
+.square29, #Board .square29.unhighlight, #Board .square29.coloroff,
+.square31, #Board .square31.unhighlight, #Board .square31.coloroff,
+.square32, #Board .square32.unhighlight, #Board .square32.coloroff,
+.square34, #Board .square34.unhighlight, #Board .square34.coloroff,
+.square36, #Board .square36.unhighlight, #Board .square36.coloroff,
+.square38, #Board .square38.unhighlight, #Board .square38.coloroff,
+.square41, #Board .square41.unhighlight, #Board .square41.coloroff,
+.square43, #Board .square43.unhighlight, #Board .square43.coloroff,
+.square45, #Board .square45.unhighlight, #Board .square45.coloroff,
+.square47, #Board .square47.unhighlight, #Board .square47.coloroff,
+.square48, #Board .square48.unhighlight, #Board .square48.coloroff,
+.square50, #Board .square50.unhighlight, #Board .square50.coloroff,
+.square52, #Board .square52.unhighlight, #Board .square52.coloroff,
+.square54, #Board .square54.unhighlight, #Board .square54.coloroff,
+.square57, #Board .square57.unhighlight, #Board .square57.coloroff,
+.square59, #Board .square59.unhighlight, #Board .square59.coloroff,
+.square61, #Board .square61.unhighlight, #Board .square61.coloroff,
+.square63, #Board .square63.unhighlight,  #Board .square63.coloroff {
+  background-color: #e2e2e2;
+}
+
+.square1,  #Board .square1.unhighlight,  #Board .square1.coloroff, 
+.square3,  #Board .square3.unhighlight,  #Board .square3.coloroff, 
+.square5,  #Board .square5.unhighlight,  #Board .square5.coloroff, 
+.square7,  #Board .square7.unhighlight,  #Board .square7.coloroff, 
+.square8,  #Board .square8.unhighlight,  #Board .square8.coloroff, 
+.square10, #Board .square10.unhighlight, #Board .square10.coloroff,
+.square12, #Board .square12.unhighlight, #Board .square12.coloroff,
+.square14, #Board .square14.unhighlight, #Board .square14.coloroff,
+.square17, #Board .square17.unhighlight, #Board .square17.coloroff,
+.square19, #Board .square19.unhighlight, #Board .square19.coloroff,
+.square21, #Board .square21.unhighlight, #Board .square21.coloroff,
+.square23, #Board .square23.unhighlight, #Board .square23.coloroff,
+.square24, #Board .square24.unhighlight, #Board .square24.coloroff,
+.square26, #Board .square26.unhighlight, #Board .square26.coloroff,
+.square28, #Board .square28.unhighlight, #Board .square28.coloroff,
+.square30, #Board .square30.unhighlight, #Board .square30.coloroff,
+.square33, #Board .square33.unhighlight, #Board .square33.coloroff,
+.square35, #Board .square35.unhighlight, #Board .square35.coloroff,
+.square37, #Board .square37.unhighlight, #Board .square37.coloroff,
+.square39, #Board .square39.unhighlight, #Board .square39.coloroff,
+.square40, #Board .square40.unhighlight, #Board .square40.coloroff,
+.square42, #Board .square42.unhighlight, #Board .square42.coloroff,
+.square44, #Board .square44.unhighlight, #Board .square44.coloroff,
+.square46, #Board .square46.unhighlight, #Board .square46.coloroff,
+.square49, #Board .square49.unhighlight, #Board .square49.coloroff,
+.square51, #Board .square51.unhighlight, #Board .square51.coloroff,
+.square53, #Board .square53.unhighlight, #Board .square53.coloroff,
+.square55, #Board .square55.unhighlight, #Board .square55.coloroff,
+.square56, #Board .square56.unhighlight, #Board .square56.coloroff,
+.square58, #Board .square58.unhighlight, #Board .square58.coloroff,
+.square60, #Board .square60.unhighlight, #Board .square60.coloroff,
+.square62, #Board .square62.unhighlight,  #Board .square62.coloroff  {
+  background-color: #666;
+}
+
+#Board .square56 {
+    -moz-border-radius-bottomleft:8px;
+    -webkit-border-bottom-left-radius:8px;
+    border-bottom-left-radius:8px;
+}
+
+#Board .square63 {
+    -moz-border-radius-bottomright:8px;
+    -webkit-border-bottom-right-radius:8px;
+    border-bottom-right-radius:8px;
+}
+#Board .square0 {
+    -moz-border-radius-topleft:8px;
+    -webkit-top-bottom-left-radius:8px;
+    border-top-left-radius:8px;
+}
+
+#Board .square7 {
+    -moz-border-radius-topright:8px;
+    -webkit-border-top-right-radius:8px;
+    border-top-right-radius:8px;
+}
+#Board table {
+  background-color: #e2e2e2 !important;
+  border-collapse: collapse;
+  border-spacing: 0px;
+  -webkit-border-horizontal-spacing: 0px;
+  -webkit-border-vertical-spacing: 0px;
+  -webkit-box-shadow: 1px 1px 8px 0px #999;
+    border-radius:8px;
+}
+#Board {
+  border-radius: 8px;
+  background-image: none;
+}
+
+.tutorialHighlight {
+  background-color: #ec008c; 
+}
+#Board .tutorialHighlight.unhighlight,
+#Board .tutorialHighlight.coloroff {
+  background-color: #ec008c; 
+}
+
+.vertical-center {
+  height: 100vh;
+  width: 100vw;
+  position: relative;
+}
+.vertical-center-inner {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.horizontal-center {
+  height: 100vh;
+  width: 100vw;
+  position: relative;
+}
+.horizontal-center-inner {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+#chessboard {
+  position: absolute;
+  top: 45%;
+  left: 50%;
+}
+
+@media only screen and (orientation: landscape)  {
+/*    #chessboard {
+      height: 64vh;
+      margin-left: -32vh;
+      margin-top: -32vh;
+    }
+    #Board {
+      width: 64vh;
+      height: 64vh;
+    }
+    #Board div {
+      width: 8vh;
+      height: 8vh;
+    }
+    #Board img {
+      width: 8vh;
+      height: 8vh; 
+      margin: -1px;
+    }
+    #Board table tbody tr {
+      height: 8vh;
+    }*/
+    #chessboard {
+      height: 80vh;
+      margin-left: -40vh;
+      margin-top: -40vh;
+    }
+    #Board {
+      width: 80vh;
+      height: 80vh;
+    }
+    #Board div {
+      width: 10vh;
+      height: 10vh;
+    }
+    #Board img {
+      width: 10vh;
+      height: 10vh; 
+      margin: -1px;
+    }
+    #Board table tbody tr {
+      height: 10vh;
+    }
+    .logo img {
+      width: 25vh;
+    }
+}
+@media only screen and (orientation: portrait)  {
+    #chessboard {
+      height: 80vw;
+      margin-left: -40vw;
+      margin-top: -40vw;
+    }
+    #Board {
+      width: 80vw;
+      height: 80vw;
+    }
+    #Board div {
+      width: 10vw;
+      height: 10vw;
+    }
+    #Board img {
+      width: 10vw;
+      height: 10vw; 
+      margin: -1px;
+    }
+    #Board table tbody tr {
+      height: 10vw;
+    }
+    .logo img {
+      width: 25vh;
+    }
+}
