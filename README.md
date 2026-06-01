@@ -5,6 +5,7 @@ Chess Puzzles is a standalone chess puzzle app.
 ## GitHub Pages
 
 The repository root `index.html` is the app entrypoint for GitHub Pages.
+GitHub: [https://adrian3.github.io/chess-puzzles/](https://adrian3.github.io/chess-puzzles/)
 
 ## Layout
 
