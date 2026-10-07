@@ -21,9 +21,7 @@ The opening sentence is adapted from the [original Chess Puzzles Pro iOS descrip
 
 ## From the App Store to the web
 
-The original iOS editions reached **71,478 downloads for Free Chess Puzzles** and **4,209 for Chess Puzzles Pro**. This free web edition brings that puzzle experience back to your browser.
-
-*Lifetime iOS download totals (first-time downloads/purchases), from Ade’s App Store Connect export of September 29, 2026.*
+The original iOS editions, Free Chess Puzzles and Chess Puzzles Pro, reached **75,687 downloads combined**. This free web edition brings that puzzle experience back to your browser.
 
 ## Keep it on your home screen
 
