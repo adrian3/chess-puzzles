@@ -17,8 +17,6 @@ Find the hidden checkmate, spot a surprising sacrifice, and sharpen your eye for
 
 Open a puzzle, tap a piece, then tap its destination. Keep going until you find checkmate.
 
-The opening sentence is adapted from the [original Chess Puzzles Pro iOS description](https://rawg.io/games/chess-puzzles-pro).
-
 ## From the App Store to the web
 
 The original iOS editions, Free Chess Puzzles and Chess Puzzles Pro, reached **75,687 downloads combined**. This free web edition brings that puzzle experience back to your browser.
